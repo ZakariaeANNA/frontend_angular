@@ -34,11 +34,11 @@
       </button>
     </div>
     <div class="modal-body">
-      <p>Are you sure you want to delete arbitre {{newJoueur?.nomJoueur}}</p>
+      <p>Are you sure you want to delete arbitre {{Data.nomJoueur}}</p>
     </div>
     <div class="modal-footer">
       <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">close</button>
-      <button type="button"  (click)="deleteJoueur(newJoueur.idJoueur)" class="btn btn-danger">Delete</button>
+      <button type="button"  (click)="deleteJoueur(Data.idJoueur)" class="btn btn-danger">Delete</button>
     </div>
   </ng-template>
 
@@ -54,19 +54,19 @@
         
             <div class="mt-2">
                 <label >ID Joueur</label>
-                <input type="number"[(ngModel)]= "newJoueur.idJoueur" name="idJoueur" class="form-control">
+                <input type="number"[(ngModel)]= "Data.idJoueur" name="idJoueur" class="form-control">
             </div>  
             <div class="mt-2" >
                 <label >Nom Joueur</label>
-                <input type="text"[(ngModel)]= "newJoueur.nomJoueur" name="nomJoueur" class="form-control">
+                <input type="text"[(ngModel)]= "Data.nomJoueur" name="nomJoueur" class="form-control">
             </div>  
             <div class="mt-2">
                 <label >Poste Joueur</label>
-                <input type="text" [(ngModel)]= "newJoueur.poste" name="poste" class="form-control">
+                <input type="text" [(ngModel)]= "Data.poste" name="poste" class="form-control">
             </div>
             <div class="mt-2">
                 <label >Nom Equipe</label>
-                <input type="text" [(ngModel)]= "newJoueur.nomEquipe" name="nomEquipe" class="form-control">
+                <input type="text" [(ngModel)]= "Data.nomEquipe" name="nomEquipe" class="form-control">
             </div>
         
     </div>
@@ -78,17 +78,17 @@
   </ng-template>
 
   <ng-template #ajoutermodal let-modal>
-    <form>
-    <div class="modal-header">
-      <h4 class="modal-title" id="modal-basic-title">Ajouter Joueur</h4>
-      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
-        <span aria-hidden="true">×</span>
-      </button>
-    </div>
-    <div class="modal-body">
+    <form [formGroup]="ajouterJoueurForm" (onSubmit)="addJoueur()">
+      <div class="modal-header">
+          <h4 class="modal-title" id="modal-basic-title">Ajouter Joueur</h4>
+            <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+             <span aria-hidden="true">×</span>
+            </button>
+      </div>
+      <div class="modal-body">
             <div class="mt-2" >
                 <label >Nom Joueur</label>
-                <input type="text"[(ngModel)]= "newJoueur1.nomJoueur" name="nomJoueur" class="form-control">
+                <input type="text"[(ngModel)]= "Data.nomJoueur" name="nomJoueur" class="form-control">
             </div>  
         
             <div class="mt-2">
@@ -100,7 +100,7 @@
                 <label >Nom Equipe</label>
                 <input type="text" [(ngModel)]= "newJoueur1.nomEquipe" name="nomEquipe" class="form-control">
             </div>
-    </div>
+       </div>
     <div class="modal-footer">
       <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">close</button>
       <button type="submit"  class="btn btn-success">Ajouter</button>

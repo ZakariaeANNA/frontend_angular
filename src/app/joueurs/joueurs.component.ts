@@ -3,6 +3,7 @@ import {Joueur} from '../shared/models/joueur';
 import {JoueurService} from '../shared/services/joueur.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-joueurs',
@@ -12,21 +13,26 @@ import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 export class JoueursComponent implements OnInit {
 
   joueurs : Joueur[];
-  newJoueur : Joueur;
-  newJoueur1 : Joueur;
+  Data : any;
   closeResult: string = '';
+  ajouterJoueurForm = new FormGroup({
+    idJoueur : new FormControl(),
+    nomJoueur : new FormControl(),
+    poste : new FormControl(),
+    equipe : new FormGroup({
+      nomEquipe : new FormControl()
+    }),
+  })
   constructor(private joueurService:JoueurService,private modalService: NgbModal) {
-    this.joueurs = [{idJoueur:0,nomJoueur:'karem benzema',poste:'attaquant',nomEquipe:'real madred'},
-    {idJoueur:1,nomJoueur:'luis suarez',poste:'attaquant',nomEquipe:'atlitico madred'}];
-    this.newJoueur = {idJoueur:0,nomJoueur:'hvrt',poste:'thth',nomEquipe:'thhtrh'}
-    this.newJoueur1 = {idJoueur:0,nomJoueur:'',poste:'',nomEquipe:''}
+    this.joueurs = [];
   }
 
+  
   ngOnInit(): void {
+    this.getJoueurs();
   }
 
-  open(content:any,joueur:Joueur) {
-    this.newJoueur = joueur;
+  open(content:any,Data:any) {
     this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
@@ -63,8 +69,8 @@ export class JoueursComponent implements OnInit {
     );
   }
 
-  public addJoueur(){
-    this.joueurService.addJoueur(this.newJoueur1);
+  public addJoueur(joueur:Joueur){
+    this.joueurService.addJoueur(joueur);
   }
 
   public deleteJoueur(id:number){
@@ -79,8 +85,8 @@ export class JoueursComponent implements OnInit {
     );
   }
 
-  public getJoueursByposteEquipe(){
-    this.joueurService.JoueurParposteEquipe(this.newJoueur.poste,this.newJoueur.nomEquipe)
+  public getJoueursByposteEquipe(poste:string,nomEquipe:string){
+    this.joueurService.JoueurParposteEquipe(poste,nomEquipe)
   }
 
   
