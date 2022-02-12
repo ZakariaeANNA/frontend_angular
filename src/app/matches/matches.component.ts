@@ -17,21 +17,11 @@ import { NgForm } from '@angular/forms';
 export class MatchesComponent implements OnInit {
 
   matches : Matche[];
-  newMatche : Matche;
-  equipes : Equipe;
-  joueurs : Joueur;
-  arbitre : Arbitre;
-  stade : Stade;
   Data : any
   closeResult: string = '';
   constructor(private matcheService:MatcheService,private modalService: NgbModal) {
      
-     this.arbitre = {idArbitre:0,nom:'',nationalite:'',Matches:[]}
-     this.stade = {idStade:0,nomStade:'',villeStade:'',matches:[]}
-     this.joueurs = {idJoueur:0,nomJoueur:'dembele',poste:'attaquant',nomEquipe:'FCB'}
-     this.equipes = {idEquipe:0,nomEquipe:'FCB',pays:'Espagne',matches:[],joueurs:[this.joueurs]}
-     this.matches = [{idMatch:0,dateMatch:'2022-02-29',heureMatch:'21:30',arbitre:this.arbitre,stade:this.stade,equipes:[this.equipes]}]
-     this.newMatche = {idMatch:0,dateMatch:'2022-04-31',heureMatch:'12:30',arbitre:this.arbitre,stade:this.stade,equipes:[this.equipes]}
+     this.matches = []
   }
 
   ngOnInit(): void {

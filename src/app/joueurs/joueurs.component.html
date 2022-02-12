@@ -27,23 +27,23 @@
 </div>
 
 <ng-template #deletemodal let-modal>
-    <div class="modal-header">
-      <h4 class="modal-title" id="modal-basic-title">Delete Joueur</h4>
-      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
-        <span aria-hidden="true">×</span>
-      </button>
-    </div>
-    <div class="modal-body">
-      <p>Are you sure you want to delete arbitre {{Data.nomJoueur}}</p>
-    </div>
-    <div class="modal-footer">
-      <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">close</button>
-      <button type="button"  (click)="deleteJoueur(Data.idJoueur)" class="btn btn-danger">Delete</button>
-    </div>
-  </ng-template>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Delete Joueur</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">×</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p>Are you sure you want to delete arbitre {{Data.nomJoueur}}</p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">close</button>
+    <button type="button"  (click)="deleteJoueur(Data.idJoueur)" class="btn btn-danger">Delete</button>
+  </div>
+</ng-template>
 
-  <ng-template #modifiermodal let-modal>
-    <form>
+<ng-template #modifiermodal let-modal>
+  <form>
     <div class="modal-header">
       <h4 class="modal-title" id="modal-basic-title">Modifier Joueur</h4>
       <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
@@ -51,161 +51,58 @@
       </button>
     </div>
     <div class="modal-body">
-        
-            <div class="mt-2">
-                <label >ID Joueur</label>
-                <input type="number"[(ngModel)]= "Data.idJoueur" name="idJoueur" class="form-control">
-            </div>  
-            <div class="mt-2" >
-                <label >Nom Joueur</label>
-                <input type="text"[(ngModel)]= "Data.nomJoueur" name="nomJoueur" class="form-control">
-            </div>  
-            <div class="mt-2">
-                <label >Poste Joueur</label>
-                <input type="text" [(ngModel)]= "Data.poste" name="poste" class="form-control">
-            </div>
-            <div class="mt-2">
-                <label >Nom Equipe</label>
-                <input type="text" [(ngModel)]= "Data.nomEquipe" name="nomEquipe" class="form-control">
-            </div>
-        
+      <div class="mt-2">
+          <label >ID Joueur</label>
+          <input type="number"[(ngModel)]= "Data.idJoueur" name="idJoueur" class="form-control">
+      </div>  
+      <div class="mt-2" >
+          <label >Nom Joueur</label>
+          <input type="text"[(ngModel)]= "Data.nomJoueur" name="nomJoueur" class="form-control">
+      </div>  
+      <div class="mt-2">
+          <label >Poste Joueur</label>
+          <input type="text" [(ngModel)]= "Data.poste" name="poste" class="form-control">
+      </div>
+      <div class="mt-2">
+          <label >Nom Equipe</label>
+          <input type="text" [(ngModel)]= "Data.nomEquipe" name="nomEquipe" class="form-control">
+      </div>
     </div>
     <div class="modal-footer">
       <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">close</button>
       <button type="submit"  class="btn btn-warning">Modifier</button>
     </div>
   </form>
-  </ng-template>
+</ng-template>
 
-  <ng-template #ajoutermodal let-modal>
-    <form [formGroup]="ajouterJoueurForm" (onSubmit)="addJoueur()">
-      <div class="modal-header">
-          <h4 class="modal-title" id="modal-basic-title">Ajouter Joueur</h4>
-            <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
-             <span aria-hidden="true">×</span>
-            </button>
+<ng-template #ajoutermodal let-modal>
+  <form [formGroup]="ajouterJoueurForm" >
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Ajouter Joueur</h4>
+          <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">×</span>
+          </button>
+    </div>
+    <div class="modal-body">
+      <div class="mt-2" >
+          <label >Nom Joueur</label>
+          <input type="text" formControlName="nomJoueur" name="nomJoueur" class="form-control">
+      </div>  
+      <div class="mt-2">
+          <label >Poste Joueur</label>
+          <input type="text" formControlName="poste" name="poste" class="form-control">
       </div>
-      <div class="modal-body">
-            <div class="mt-2" >
-                <label >Nom Joueur</label>
-                <input type="text"[(ngModel)]= "Data.nomJoueur" name="nomJoueur" class="form-control">
-            </div>  
-        
-            <div class="mt-2">
-                <label >Poste Joueur</label>
-                <input type="text" [(ngModel)]= "newJoueur1.poste" name="poste" class="form-control">
-            </div>
-
-            <div class="mt-2">
-                <label >Nom Equipe</label>
-                <input type="text" [(ngModel)]= "newJoueur1.nomEquipe" name="nomEquipe" class="form-control">
-            </div>
-       </div>
+      <div formGroupName="equipe">
+        <div class="mt-2">
+          <label >Nom Equipe</label>
+          <input type="text" formControlName="nomEquipe" name="nomEquipe" class="form-control">
+        </div>
+      </div>
+    </div>
     <div class="modal-footer">
       <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">close</button>
-      <button type="submit"  class="btn btn-success">Ajouter</button>
+      <button type="submit" (click)="addJoueur()" class="btn btn-success">Ajouter</button>
     </div>
   </form>
-  </ng-template>
+</ng-template>
 
-<!-- Delete Modal -->
-<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-            <form>
-                <div class="mt-2">
-                    <label >ID idJoueur</label>
-                    <input type="number"[(ngModel)]= "newJoueur.idJoueur" name="idJoueur" class="form-control">
-                </div>  
-                <div class="mt-2">
-                   <button type="submit"  class="btn btn-success">Delete</button>
-                </div>
-            </form>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
-        </div>
-      </div>
-    </div>
-  </div>
-  
-  <!-- Modifier Modal -->
-  <div class="modal fade" id="modifierModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-            <form>
-                <div class="mt-2">
-                    <label >ID idJoueur</label>
-                    <input type="number"[(ngModel)]= "newJoueur.idJoueur" name="idJoueur" class="form-control">
-                </div>  
-                <div class="mt-2" >
-                    <label >Nom Joueur</label>
-                    <input type="text"[(ngModel)]= "newJoueur.nomJoueur" name="nomJoueur" class="form-control">
-                </div>  
-                <div class="mt-2">
-                    <label >Poste Joueur</label>
-                    <input type="text" [(ngModel)]= "newJoueur.poste" name="poste" class="form-control">
-                </div>
-                <div class="mt-2">
-                   <button type="submit"  class="btn btn-success">Modifier</button>
-                </div>
-            </form>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
-        </div>
-      </div>
-    </div>
-  </div>
-  
-  
-  <!-- Ajouter Modal -->
-  <div class="modal fade" id="ajouterModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Ajouter Arbitre</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <form>
-            <div class="mt-2" >
-                <label >Nom Joueur</label>
-                <input type="text"[(ngModel)]= "newJoueur1.nomJoueur" name="nomJoueur" class="form-control">
-            </div>  
-        
-            <div class="mt-2">
-                <label >Poste Joueur</label>
-                <input type="text" [(ngModel)]= "newJoueur1.poste" name="poste" class="form-control">
-            </div>
-        
-            <div class="mt-2">
-               <button type="submit"  class="btn btn-success">Ajouter</button>
-            </div>
-           </form>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
-        </div>
-      </div>
-    </div>
-  </div>

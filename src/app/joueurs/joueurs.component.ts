@@ -16,7 +16,6 @@ export class JoueursComponent implements OnInit {
   Data : any;
   closeResult: string = '';
   ajouterJoueurForm = new FormGroup({
-    idJoueur : new FormControl(),
     nomJoueur : new FormControl(),
     poste : new FormControl(),
     equipe : new FormGroup({
@@ -69,8 +68,9 @@ export class JoueursComponent implements OnInit {
     );
   }
 
-  public addJoueur(joueur:Joueur){
-    this.joueurService.addJoueur(joueur);
+  public addJoueur(){
+    //this.joueurService.addJoueur(joueur);
+    console.log(this.ajouterJoueurForm.value);
   }
 
   public deleteJoueur(id:number){
