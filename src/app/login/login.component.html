@@ -1,0 +1,64 @@
+<div class="container">
+    <form #f="ngForm" (ngSubmit)="onSubmitLogin(f)" class="formLogin">
+        <div class="title text-center">Login Form</div>
+        <div class="mb-3">
+          <input type="text" name="username" ngModel class="form-control" id="usernameInput" aria-describedby="usernameHelp" placeholder="Username" #username="ngModel">
+        </div>
+        <div class="mb-3">
+          <input type="password" name="password" ngModel class="form-control" id="exampleInputPassword1" placeholder="Password" #password="ngModel">
+        </div>
+        <div class="mb-3 form-check">
+          <input type="checkbox" class="form-check-input" ngModel id="exampleCheck1">
+          <label class="form-check-label" for="exampleCheck1">Check me out</label>
+        </div>
+        <div class="mb-3 text-center">
+            <button type="submit" class="btn w-100 btn-dark ">Log In</button>
+        </div>
+        <div class="mb-3 text-center">
+            <a href="#">Forgot Password ?</a>
+        </div>
+        <div class="mb-3 text-center">
+            <button type="button" class="btn btn-outline-success" (click)="open(mymodal)">Create new Account</button>
+        </div>
+    </form>
+</div>
+
+<ng-template #mymodal let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title font-bold" id="modal-basic-title">Register Form</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">×</span>
+      </button>
+    </div>
+    <div class="modal-body">
+        <form #fregister="ngForm" (ngSubmit)="onSubmitRegister(fregister)">
+            <div class="mb-3">
+                <input type="text" name="username" ngModel #username="ngModel" class="form-control" id="usernameInput" aria-describedby="usernameHelp" placeholder="Username">
+            </div>
+            <div class="mb-3">
+                <input type="password" name="password" ngModel #password="ngModel" class="form-control" id="exampleInputPassword1" placeholder="Password">
+            </div>
+            <div class="mb-3">
+                <input type="email" name="email" ngModel #email="ngModel" class="form-control" id="emailInput" aria-describedby="emailHelp" placeholder="Email">
+            </div>
+            <div class="mb-3">
+                <input type="text" name="firstName" ngModel #firstName="ngModel" class="form-control" id="firstNameInput" placeholder="First Name">
+            </div>
+            <div class="mb-3">
+                <input type="text" name="lastName" ngModel #lastName="ngModel" class="form-control" id="lastNameInput" placeholder="Last Name">
+            </div>
+            <div class="input-group">
+                <input class="form-control" placeholder="dd/mm/yyyy" name="birthDate" ngModel #birthDate="ngModel" [(ngModel)]="model" ngbDatepicker #d="ngbDatepicker">
+                <div class="input-group-append">
+                <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"><i class="bi bi-calendar"></i></button>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-danger w-25" (click)="modal.close('Save click')">Cancel</button>
+                <button type="submit" class="btn btn-primary w-50" (click)="modal.close('Save click')">Sign Up</button>
+            </div>
+        </form>
+        
+    </div>
+    
+</ng-template>
