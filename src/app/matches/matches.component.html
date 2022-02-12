@@ -1,0 +1,186 @@
+<div class="container">
+    <div class="card shadow mb-4">
+        <div class="card-body">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Date</th>
+                        <th>Heure</th>
+                        <th>Equipes</th>
+                        <th>Delete</th>
+                        <th>Modifier</th>
+                    </tr>
+                </thead>
+                <tbody *ngFor="let matche of matches">
+                    <tr>
+                        <td>{{matche.idMatch}}</td>
+                        <td>{{matche.dateMatch}}</td>
+                        <td>{{matche.heureMatch}}</td>
+                        <td><button type="button" class="btn btn-primary" (click)="open(equipemodal,matche)">equipes</button></td>
+                        <td><button type="button" class="btn btn-danger" (click)="open(deletemodal,matche)">delete</button></td>
+                        <td><button type="button" class="btn btn-warning" (click)="open(modifiermodal,matche)">modifier</button></td>
+                    </tr>
+                </tbody>
+            </table>
+            <button type="button" class="btn btn-success" (click)="openModal(ajoutermodal)">Ajouter Matche</button>
+        </div>
+    </div>
+</div>
+
+<ng-template #deletemodal let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Delete Matche</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">×</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <p>Are you sure you want to delete matche {{Data?.idMatch}}</p>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">close</button>
+      <button type="button"  (click)="deleteMatche(newMatche.idMatch)" class="btn btn-danger">Delete</button>
+    </div>
+</ng-template>
+
+<ng-template #modifiermodal let-modal>
+    <form>
+      <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Modifier Matche</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="mt-2">
+            <label >ID Matche</label>
+            <input type="number" [(ngModel)]= "Data.idMatch" name="idMatch" class="form-control">
+        </div>  
+        <div class="mt-2" >
+            <label >Date Matche</label>
+            <div class="input-group">
+                <input class="form-control" placeholder="dd/mm/yyyy"
+                        name="d2" #dateMatch="ngModel" [(ngModel)]="Data.dateMatch" ngbDatepicker #d2="ngbDatepicker">
+                <div class="input-group-append">
+                  <button class="btn btn-outline-secondary calendar" (click)="d2.toggle()" type="button"></button>
+                </div>
+            </div>
+        </div>  
+        <div class="mt-2">
+            <label >Heure Matche</label>
+            <ngb-timepicker [(ngModel)]="Data.heureMatch"></ngb-timepicker>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">close</button>
+        <button type="submit"  class="btn btn-warning">Modifier</button>
+      </div>
+  </form>
+</ng-template>
+
+<ng-template #ajoutermodal let-modal>
+    <form>
+      <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Ajouter Matche</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <div class="mt-2" >
+              <label >Date Matche</label>
+              <div class="input-group">
+                  <input class="form-control" placeholder="dd/mm/yyyy"
+                        name="d2" #dateMatch="ngModel" [(ngModel)]="Data.dateMatch" ngbDatepicker #d2="ngbDatepicker">
+                  <div class="input-group-append">
+                    <button class="btn btn-outline-secondary calendar" (click)="d2.toggle()" type="button"></button>
+                  </div>
+              </div>
+          </div>  
+          <div class="mt-2">
+              <label >Heure Matche</label>
+              <ngb-timepicker [(ngModel)]="Data.heureMatch"></ngb-timepicker>
+          </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">close</button>
+        <button type="submit"  class="btn btn-success">Ajouter</button>
+      </div>
+    </form>
+</ng-template>
+
+
+
+<ng-template #equipemodal let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Affichage Equipes</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">×</span>
+      </button>
+    </div>
+    <div class="modal-body">
+        <div class="card shadow mb-4">
+            <div class="card-body">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Nom</th>
+                            <th>Pays</th>
+                            <th>Joueurs</th>
+                        </tr>
+                    </thead>
+                    <tbody *ngFor="let equipe of Data.equipes">
+                        <tr>
+                            <td>{{equipe.idEquipe}}</td>
+                            <td>{{equipe.nomEquipe}}</td>
+                            <td>{{equipe.pays}}</td>
+                            <td><button type="button" class="btn btn-primary" (click)="open(joueurmodal,equipe)">joueurs</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">close</button>
+    </div>
+</ng-template>
+
+
+
+<ng-template #joueurmodal let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Affichage Joueurs</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">×</span>
+      </button>
+    </div>
+    <div class="modal-body">
+        <div class="card shadow mb-4">
+            <div class="card-body">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Nom</th>
+                            <th>Poste</th>
+                        </tr>
+                    </thead>
+                    <tbody *ngFor="let joueur of Data.equipe.joueurs">
+                        <tr>
+                            <td>{{joueur.idJoueur}}</td>
+                            <td>{{joueur.nomJoueur}}</td>
+                            <td>{{joueur.poste}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">close</button>
+    </div>
+</ng-template>
+
