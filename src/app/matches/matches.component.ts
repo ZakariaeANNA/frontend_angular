@@ -35,7 +35,11 @@ export class MatchesComponent implements OnInit {
     equipes : new FormArray([
       new FormGroup({
         idEquipe : new FormControl(),
-        nomEquipe : new FormControl()
+        nomEquipe : new FormControl('')
+      }),
+      new FormGroup({
+        idEquipe : new FormControl(),
+        nomEquipe : new FormControl('')
       })
     ])
   })
@@ -118,6 +122,10 @@ export class MatchesComponent implements OnInit {
         console.log(error.message)
       },
     );
+  }
+
+  public addMatche(){
+    console.log(this.ajouterMatcheForm.value)
   }
 
 }
