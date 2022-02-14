@@ -4,6 +4,8 @@ import {JoueurService} from '../shared/services/joueur.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import { FormControl, FormGroup } from '@angular/forms';
+import { AlertService } from 'ngx-alerts';
+import { Equipe } from '../shared/models/equipe';
 
 @Component({
   selector: 'app-joueurs',
@@ -19,19 +21,32 @@ export class JoueursComponent implements OnInit {
     nomJoueur : new FormControl(),
     poste : new FormControl(),
     equipe : new FormGroup({
+      idEquipe : new FormControl(),
       nomEquipe : new FormControl()
     }),
   })
-  constructor(private joueurService:JoueurService,private modalService: NgbModal) {
+  modifierJoueurForm = new FormGroup({
+    idJoueur : new FormControl(),
+    nomJoueur : new FormControl(),
+    poste : new FormControl(),
+    equipe : new FormGroup({
+      idEquipe : new FormControl(),
+      nomEquipe : new FormControl()
+    }),
+  })
+  constructor(private joueurService:JoueurService,private modalService: NgbModal,private alertService:AlertService) {
     this.joueurs = [];
   }
 
   
   ngOnInit(): void {
     this.getJoueurs();
+
   }
 
   open(content:any,Data:any) {
+    this.Data = Data
+    console.log(Data)
     this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
@@ -61,6 +76,7 @@ export class JoueursComponent implements OnInit {
     this.joueurService.getJoueurs().subscribe(
       (response : Joueur[]) => {
         this.joueurs = response;
+        console.log(response);
       },
       (error : HttpErrorResponse) => {
         alert(error.message)
@@ -69,8 +85,53 @@ export class JoueursComponent implements OnInit {
   }
 
   public addJoueur(){
-    //this.joueurService.addJoueur(joueur);
-    console.log(this.ajouterJoueurForm.value);
+ 
+    console.log(this.ajouterJoueurForm.value.equipe.nomEquipe)
+    this.joueurService.GetEquipeBynomEquipe(this.ajouterJoueurForm.value.equipe.nomEquipe).subscribe(
+      (response : Response)=>{
+        console.log(response)
+        //this.ajouterJoueurForm.value.equipe.idEquipe = response.idEquipe
+        this.joueurService.addJoueur(this.ajouterJoueurForm.value).subscribe(
+           (response : Response)=>{
+               this.alertService.success('joueur added with success')
+               this.getJoueurs()
+           },
+           (error : HttpErrorResponse) => {
+            this.alertService.danger('joueur not added with succes')
+          },
+        )
+        
+      },
+      (error : HttpErrorResponse) => {
+        this.alertService.danger('equipe not found')
+      },
+    );
+    
+  }
+
+  public modifierJoueur(){
+ 
+    console.log(this.modifierJoueurForm.value.equipe.nomEquipe)
+    this.joueurService.GetEquipeBynomEquipe(this.modifierJoueurForm.value.equipe.nomEquipe).subscribe(
+      (response : Response)=>{
+        console.log(response)
+        //this.modifierJoueurForm.value.equipe.idEquipe = response.idEquipe
+        this.joueurService.addJoueur(this.modifierJoueurForm.value).subscribe(
+           (response : Response)=>{
+               this.alertService.success('joueur modified with success')
+               this.getJoueurs()
+           },
+           (error : HttpErrorResponse) => {
+            this.alertService.danger('joueur not modified with succes')
+          },
+        )
+        
+      },
+      (error : HttpErrorResponse) => {
+        this.alertService.danger('equipe modified not found')
+      },
+    );
+    
   }
 
   public deleteJoueur(id:number){

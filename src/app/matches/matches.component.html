@@ -60,7 +60,7 @@
         <div class="mt-2" >
             <label >Date Matche</label>
             <div class="input-group">
-                <input class="form-control" placeholder="dd/mm/yyyy"
+                <input class="form-control" placeholder="dd/mm/yyyy" 
                         name="d2" #dateMatch="ngModel" [(ngModel)]="Data.dateMatch" ngbDatepicker #d2="ngbDatepicker">
                 <div class="input-group-append">
                   <button class="btn btn-outline-secondary calendar" (click)="d2.toggle()" type="button"></button>
@@ -69,8 +69,24 @@
         </div>  
         <div class="mt-2">
             <label >Heure Matche</label>
-            <ngb-timepicker [(ngModel)]="Data.heureMatch"></ngb-timepicker>
+            <input type="time" id="input" class="form-control" value="{{Data?.heureMatch}}" mdbInput/>
         </div>
+        <div class="mt-2">
+          <label >Nom Equipe1</label>
+          <input type="text"  name="nomEquipe" class="form-control">
+        </div>
+        <div class="mt-2">
+          <label >Nom Equipe2</label>
+          <input type="text"  name="nomEquipe" class="form-control">
+        </div>
+        <div class="mt-2" >
+          <label >Nom Arbitre</label>
+          <input type="text"  name="nom" class="form-control">
+        </div>  
+        <div class="mt-2" >
+          <label >Nom Stade</label>
+          <input type="text"  name="nomStade" class="form-control">
+        </div>  
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">close</button>
@@ -80,7 +96,7 @@
 </ng-template>
 
 <ng-template #ajoutermodal let-modal>
-    <form>
+    <form [formGroup]="ajouterMatcheForm">
       <div class="modal-header">
         <h4 class="modal-title" id="modal-basic-title">Ajouter Matche</h4>
         <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
@@ -91,8 +107,8 @@
           <div class="mt-2" >
               <label >Date Matche</label>
               <div class="input-group">
-                  <input class="form-control" placeholder="dd/mm/yyyy"
-                        name="d2" #dateMatch="ngModel" [(ngModel)]="Data.dateMatch" ngbDatepicker #d2="ngbDatepicker">
+                  <input class="form-control" placeholder="dd/mm/yyyy" formControlName="dateMatch"
+                        name="d2"  [(ngModel)]="Data.dateMatch" ngbDatepicker #d2="ngbDatepicker">
                   <div class="input-group-append">
                     <button class="btn btn-outline-secondary calendar" (click)="d2.toggle()" type="button"></button>
                   </div>
@@ -100,7 +116,29 @@
           </div>  
           <div class="mt-2">
               <label >Heure Matche</label>
-              <ngb-timepicker [(ngModel)]="Data.heureMatch"></ngb-timepicker>
+              <input type="time" id="input" formControlName="heureMatch" name="heureMatch" class="form-control" value="" mdbInput/>
+          </div>
+          <div formArrayName="equipes">
+          <div class="mt-2">
+            <label >Nom Equipe1</label>
+            <input type="text"  name="nomEquipe" class="form-control">
+          </div>
+          <div class="mt-2">
+            <label >Nom Equipe2</label>
+            <input type="text"  name="nomEquipe" class="form-control">
+          </div>
+          </div>
+          <div formGroupName="arbitre">
+          <div class="mt-2" >
+            <label >Nom Arbitre</label>
+            <input type="text" formControlName="nom"  name="nom" class="form-control">
+          </div>  
+          </div>
+          <div formGroupName="stade">
+          <div class="mt-2" >
+            <label >Nom Stade</label>
+            <input type="text" formControlName="nomStade" name="nomStade" class="form-control">
+          </div>  
           </div>
       </div>
       <div class="modal-footer">
@@ -168,7 +206,7 @@
                             <th>Poste</th>
                         </tr>
                     </thead>
-                    <tbody *ngFor="let joueur of Data.equipe.joueurs">
+                    <tbody *ngFor="let joueur of Data.joueurs">
                         <tr>
                             <td>{{joueur.idJoueur}}</td>
                             <td>{{joueur.nomJoueur}}</td>

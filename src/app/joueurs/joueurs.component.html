@@ -43,7 +43,7 @@
 </ng-template>
 
 <ng-template #modifiermodal let-modal>
-  <form>
+  <form [formGroup]="modifierJoueurForm">
     <div class="modal-header">
       <h4 class="modal-title" id="modal-basic-title">Modifier Joueur</h4>
       <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
@@ -53,24 +53,24 @@
     <div class="modal-body">
       <div class="mt-2">
           <label >ID Joueur</label>
-          <input type="number"[(ngModel)]= "Data.idJoueur" name="idJoueur" class="form-control">
+          <input type="number" formControlName="idJoueur" ngModel="{{Data?.idJoueur}}" name="idJoueur" class="form-control">
       </div>  
       <div class="mt-2" >
           <label >Nom Joueur</label>
-          <input type="text"[(ngModel)]= "Data.nomJoueur" name="nomJoueur" class="form-control">
+          <input type="text" formControlName="nomJoueur" ngModel="{{Data?.nomJoueur}}" name="nomJoueur" class="form-control">
       </div>  
       <div class="mt-2">
           <label >Poste Joueur</label>
-          <input type="text" [(ngModel)]= "Data.poste" name="poste" class="form-control">
+          <input type="text" formControlName="poste" ngModel="{{Data?.poste}}" name="poste" class="form-control">
       </div>
       <div class="mt-2">
           <label >Nom Equipe</label>
-          <input type="text" [(ngModel)]= "Data.nomEquipe" name="nomEquipe" class="form-control">
+          <input type="text" formControlName="nomEquipe" ngModel="{{Data?.equipe?.nomEquipe}}" name="nomEquipe" class="form-control">
       </div>
     </div>
     <div class="modal-footer">
       <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">close</button>
-      <button type="submit"  class="btn btn-warning">Modifier</button>
+      <button type="submit"  (click)="modifierJoueur()" class="btn btn-warning">Modifier</button>
     </div>
   </form>
 </ng-template>

@@ -27,4 +27,8 @@ export class JoueurService {
   public JoueurParposteEquipe(poste:string,nomequipe:string): Observable<any>{
     return this.http.get<any>(`${this.apiServerUrl}/joueurs/JoueurParposteequipe/${poste}/${nomequipe}`);
   }
+
+  public GetEquipeBynomEquipe(nomEquipe:string) : Observable<any> {
+    return this.http.get<any>(`${this.apiServerUrl}/equipes/equipe/${nomEquipe}`);
+  }
 }

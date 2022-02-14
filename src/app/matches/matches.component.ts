@@ -8,6 +8,7 @@ import { MatcheService } from '../shared/services/matche.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import {NgbModal, ModalDismissReasons,NgbDateAdapter} from '@ng-bootstrap/ng-bootstrap';
 import { NgForm } from '@angular/forms';
+import { FormControl, FormGroup,FormArray } from '@angular/forms';
 
 @Component({
   selector: 'app-matches',
@@ -19,15 +20,55 @@ export class MatchesComponent implements OnInit {
   matches : Matche[];
   Data : any
   closeResult: string = '';
+  heureMatch = {hour: 13, minute: 30};
+  ajouterMatcheForm = new FormGroup({
+    dateMatch : new FormControl(),
+    heureMatch : new FormControl(),
+    stade : new FormGroup({
+      idStade : new FormControl(),
+      nomStade : new FormControl()
+    }),
+    arbitre : new FormGroup({
+      idArbitre : new FormControl(),
+      nom : new FormControl()
+    }),
+    equipes : new FormArray([
+      new FormGroup({
+        idEquipe : new FormControl(),
+        nomEquipe : new FormControl()
+      })
+    ])
+  })
+  modifierMatcheForm = new FormGroup({
+    idMatch : new FormControl(),
+    dateMatch : new FormControl(),
+    heureMatch : new FormControl(),
+    stade : new FormGroup({
+      idStade : new FormControl(),
+      nomStade : new FormControl()
+    }),
+    arbitre : new FormGroup({
+      idArbitre : new FormControl(),
+      nom : new FormControl()
+    }),
+    equipes : new FormArray([
+      new FormGroup({
+        idEquipe : new FormControl(),
+        nomEquipe : new FormControl()
+      })
+    ])
+  })
   constructor(private matcheService:MatcheService,private modalService: NgbModal) {
      
      this.matches = []
   }
 
   ngOnInit(): void {
+    this.getMatches();
   }
 
   open(content:any,Data:any) {
+    this.Data = Data;
     this.modalService.open(content,{ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {

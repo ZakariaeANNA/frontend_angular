@@ -42,4 +42,12 @@ export class MatcheService {
   public deleteMatchesPasses() :Observable<any> {
     return this.http.delete<any>(`${this.apiServerUrl}/matches/deletePasses`);
   }
+
+  public getArbitreBynom(nom:string) : Observable<any> {
+    return this.http.get<any>(`${this.apiServerUrl}/arbitres/arbitre/${nom}`);
+  }
+
+  public getStadeBynomStade(nomStade:string) : Observable<any> {
+    return this.http.get<any>(`${this.apiServerUrl}/stades/stade/${nomStade}`);
+  }
 }
