@@ -5,6 +5,7 @@ import { Equipe } from 'src/app/shared/models/equipe';
 import { Joueur } from 'src/app/shared/models/joueur';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { EquipeService } from 'src/app/shared/services/equipe.service';
+import { AlertService } from 'ngx-alerts';
 
 @Component({
   selector: 'app-equipe',
@@ -17,7 +18,7 @@ export class EquipeComponent implements OnInit {
   public totalRecords  : number = 0
   public page  : number = 1
   public dataContent : any;
-  constructor(private equipeService  : EquipeService , private modelService : NgbModal) {}
+  constructor(private equipeService  : EquipeService , private modelService : NgbModal , private alertService : AlertService) {}
 
   ngOnInit(): void {
     this.getEquipes()
@@ -31,7 +32,7 @@ export class EquipeComponent implements OnInit {
         console.log(response)
       },
       (error : HttpErrorResponse)=>{
-        console.log(error.message)
+        this.alertService.warning("There is no Teams to load")
       }
     )
   }
@@ -39,12 +40,13 @@ export class EquipeComponent implements OnInit {
   public onAddEquipe(addForm : NgForm){
     this.equipeService.addEquipe(addForm.value).subscribe(
       (response : Response)=>{
-        console.log("data added successfully")
+        this.alertService.success("The team has been added successfully")
         this.getEquipes()
         addForm.resetForm()
       },
       (error : HttpErrorResponse)=>{
         console.log(error.message)
+        this.alertService.danger("An error accured while adding the new Team")
       }
     )
   }
@@ -54,11 +56,11 @@ export class EquipeComponent implements OnInit {
     console.log(idEquipe)
     this.equipeService.deleteEquipe(idEquipe).subscribe(
       (response : Response)=>{
-        console.log("data deleted successfully ")
+        this.alertService.success("The Team has been deleted successfully ! ")
         this.getEquipes()
       },
       (error : HttpErrorResponse)=>{
-        console.log(error.message)
+        this.alertService.danger("An error accured while deleting the Team")
       }
     )
   }

@@ -6,6 +6,7 @@ import { StadeService } from 'src/app/shared/services/stade.service';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Equipe } from 'src/app/shared/models/equipe';
 import { Matche } from 'src/app/shared/models/matche';
+import { AlertService } from 'ngx-alerts';
 
 @Component({
   selector: 'app-stade',
@@ -19,7 +20,7 @@ export class StadeComponent implements OnInit {
   public page  : number = 1
   public dataContent : any
 
-  constructor(private stadeService  : StadeService , private modelService : NgbModal) { }
+  constructor(private stadeService  : StadeService , private modelService : NgbModal , private alertService : AlertService) { }
 
   ngOnInit(): void {
     this.getStades()
@@ -40,12 +41,12 @@ export class StadeComponent implements OnInit {
     console.log(addForm.value)
     this.stadeService.addStade(addForm.value).subscribe(
       (response : Stade)=>{
-        console.log(response);
+        this.alertService.success("Satde has been added successfully !")
         this.getStades()
         addForm.resetForm()
       },
       (error : HttpErrorResponse)=>{
-        console.log(error.message)
+        this.alertService.danger("An error accured while adding stade")
       }
     )
   }
@@ -54,11 +55,11 @@ export class StadeComponent implements OnInit {
   {
     this.stadeService.deleteStade(idStade).subscribe(
       (response : Response)=>{
-        console.log(response)
+        this.alertService.success("Stade has been deleted successfully !")
         this.getStades()
       },
       (error : HttpErrorResponse)=>{
-        console.log(error.message)
+        this.alertService.danger("An error accured while deleting stade")
       }
     )
   }
@@ -89,7 +90,7 @@ export class StadeComponent implements OnInit {
           }
         },
         (error : HttpErrorResponse)=>{
-          console.log(error.message)
+          this.alertService.warning("There is no Stades to load")
         }
     )
     this.modelService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
