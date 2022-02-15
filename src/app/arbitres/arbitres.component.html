@@ -12,10 +12,10 @@
                     </tr>
                 </thead>
                 <tbody >
-                    <tr *ngFor="let arbitre of arbitres">
-                        <td>{{arbitre.idArbitre}}</td>
-                        <td>{{arbitre.nom}}</td>
-                        <td>{{arbitre.nationalite}}</td>
+                    <tr *ngFor="let arbitre of Data">
+                        <td>{{Data.idArbitre}}</td>
+                        <td>{{Data.nom}}</td>
+                        <td>{{Data.nationalite}}</td>
                         <td><button type="button" class="btn btn-danger" (click)="open(deletemodal,arbitre)">delete</button></td>
                         <td><button type="button" class="btn btn-warning" (click)="open(modifiermodal,arbitre)">modifier</button></td>
                     </tr>
@@ -34,11 +34,11 @@
     </button>
   </div>
   <div class="modal-body">
-    <p>Are you sure you want to delete arbitre {{newArbitre?.nom}}</p>
+    <p>Are you sure you want to delete arbitre {{Data.nom}}</p>
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">close</button>
-    <button type="button" (click)="deleteArbitre(newArbitre.idArbitre)" class="btn btn-danger">Delete</button>
+    <button type="button" (click)="deleteArbitre(Data.idArbitre)" class="btn btn-danger">Delete</button>
   </div>
 </ng-template>
 
@@ -54,16 +54,16 @@
     
       <div class="mt-2">
           <label >ID Arbitre</label>
-          <input disabled type="text" ngModel="{{newArbitre?.idArbitre}}" name="idArbitre" class="form-control">
+          <input disabled type="text" ngModel="{{Data?.idArbitre}}" name="idArbitre" class="form-control">
       </div>  
       <div class="mt-2" >
           <label >Nom Arbitre</label>
-          <input type="text" ngModel="{{newArbitre?.nom}}" name="nom" class="form-control">
+          <input type="text" ngModel="{{Data?.nom}}" name="nom" class="form-control">
       </div>  
   
       <div class="mt-2">
           <label >Nationalite Arbitre</label>
-          <input type="text" ngModel="{{newArbitre?.nationalite}}" name="nationalite" class="form-control">
+          <input type="text" ngModel="{{Data?.nationalite}}" name="nationalite" class="form-control">
       </div>
   
   </div>
@@ -119,7 +119,7 @@
         <form>
           <div class="mt-2">
               <label >ID Arbitre</label>
-              <input type="number"[(ngModel)]= "newArbitre.idArbitre" name="idArbitre" class="form-control">
+              <input type="number"[(ngModel)]= "Data.idArbitre" name="idArbitre" class="form-control">
           </div>  
           <div class="mt-2">
              <button type="submit"  class="btn btn-success">Delete</button>
@@ -148,16 +148,16 @@
         <form>
           <div class="mt-2">
               <label >ID Arbitre</label>
-              <input type="number"[(ngModel)]= "newArbitre.idArbitre" name="idArbitre" class="form-control">
+              <input type="number"[(ngModel)]= "Data.idArbitre" name="idArbitre" class="form-control">
           </div>  
           <div class="mt-2" >
               <label >Nom Arbitre</label>
-              <input type="text"[(ngModel)]= "newArbitre.nom" name="nom" class="form-control">
+              <input type="text"[(ngModel)]= "Data.nom" name="nom" class="form-control">
           </div>  
       
           <div class="mt-2">
               <label >Nationalite Arbitre</label>
-              <input type="text" [(ngModel)]= "newArbitre.nationalite" name="nationalite" class="form-control">
+              <input type="text" [(ngModel)]= "Data.nationalite" name="nationalite" class="form-control">
           </div>
       
           <div class="mt-2">
@@ -188,12 +188,12 @@
         <form>
           <div class="mt-2" >
               <label >Nom Arbitre</label>
-              <input type="text"[(ngModel)]= "newArbitre.nom" name="nom" class="form-control">
+              <input type="text"[(ngModel)]= "Data.nom" name="nom" class="form-control">
           </div>  
       
           <div class="mt-2">
               <label >Nationalite Arbitre</label>
-              <input type="text" [(ngModel)]= "newArbitre.nationalite" name="nationalite" class="form-control">
+              <input type="text" [(ngModel)]= "Data.nationalite" name="nationalite" class="form-control">
           </div>
       
           <div class="mt-2">
