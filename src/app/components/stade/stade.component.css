@@ -1,0 +1,19 @@
+.deletebtn{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.StadeTable{
+    padding: 20px;
+}
+.nomstade{
+    font-size: 1.7em;
+     text-align: center;
+}
+.ville{
+    font-size: 1.3em; 
+    text-align: center;
+}
+.container{
+    padding: 20px;
+}

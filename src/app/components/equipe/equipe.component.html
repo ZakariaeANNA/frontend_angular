@@ -1,0 +1,104 @@
+<div class="container">
+    <div class="listeEquipe">
+        <form class="d-flex" #searchForm="ngForm" (change)="findByPay(searchForm)">
+            <input class="form-control me-2" ngModel name="pays" type="search" placeholder="Enter Country name" aria-label="Search">
+        </form>
+        <div id="TableTeam" class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr><th>Team Name : </th><th>Country : </th></tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let equipe of equipes | paginate:{id : 'listing_pagination' , itemsPerPage : 6 , currentPage : page , totalItems : totalRecords} " style="background-color: #F8F8F8;">
+                        <td><b class="nomEquipe">{{equipe?.nomEquipe}}</b></td>
+                        <td><b class="country">{{equipe?.pays}}</b></td>
+                        <td>
+                            <form method="post" (ngSubmit)="openModal(DeleteConfirmation,equipe)">
+                                <button class="btn btn-danger">delete</button>
+                            </form>
+                        </td>
+                        <td>
+                            <form method="post" (ngSubmit)="JoueursEquipe(equipe.nomEquipe)">
+                                <button type="submit" (click)="open(TeamPlayersModal)" class="btn btn-secondary">Players</button>
+                            </form>
+                        </td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr><button class="btn btn-success" role="button" data-toggle="modal" (click)="open(TeamModal)">Add Team</button></tr>
+                </tfoot>
+            </table>
+            <div>
+                <pagination-controls id="listing_pagination" [maxSize]="5" [directionLinks]="true" (pageChange)="page = $event"></pagination-controls>
+            </div>
+        </div>
+    </div>
+    <ng-template class="modal" #TeamModal let-modal>
+        <form method="post" #addForm="ngForm" (ngSubmit)="onAddEquipe(addForm)" id="myForm">
+            <div class="modal-header px-4">
+                <h5 class="modal-title" id="exampleModalCenterTitle">Create New Team</h5>
+            </div>
+            <div class="modal-body px-4">
+                    
+                <div class="row mb-2">
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label for="name">Team Name :</label>
+                            <input type="text" name="nomEquipe" ngModel class="form-control" id="name" required/>
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-6">
+                        <div class="form-group mb-4">
+                            <label for="country">Country : </label>
+                            <input type="country" name="pays" ngModel class="form-control" required id="country"/>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+            <div class="modal-footer px-4">
+                <button type="button" class="btn btn-smoke btn-pill" (click)="modal.dismiss('')">Cancel</button>
+                <button form="myForm" type="submit" class="btn btn-success btn-pill" (click)="modal.close('')">Save Team</button>
+            </div>
+        </form>
+    </ng-template>
+    <ng-template class="modal" #DeleteConfirmation let-modal>
+        <div class="modal-content">
+            <div class="modal-header px-4">
+                <h5 class="modal-title" id="exampleModalCenterTitle" style="text-align: center;">Team Players</h5>
+            </div>
+            <div class="modal-body px-4">
+                <p>Are you sure you want to delete {{dataContent.nomEquipe}}</p>
+            </div>
+            <div class="modal-footer px-4">
+                <button type="button" class="btn btn-smoke btn-pill" (click)="modal.dismiss('')">Close</button>
+                <form method="post" (ngSubmit)="onDeleteEquipe(dataContent.idEquipe)">
+                    <button type="submit" class="btn btn-smoke btn-pill" (click)="modal.close('')">Confirm</button>
+                </form>
+            </div>
+        </div>
+    </ng-template>
+    <ng-template class="modal" #TeamPlayersModal let-modal>
+        <div class="modal-content">
+            <div class="modal-header px-4">
+                <h5 class="modal-title" id="exampleModalCenterTitle" style="text-align: center;">Team Players</h5>
+            </div>
+            <div class="modal-body px-4">
+                <div id="TableJoueurs">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr><th>Player Name : </th><th>Player Position : </th></tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let joueur of dataContent"><td><b>{{joueur?.nomJoueur}}</b></td><td><b>{{joueur?.poste}}</b></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer px-4">
+                <button type="button" class="btn btn-smoke btn-pill" (click)="modal.dismiss('')">Close</button>
+            </div>
+        </div>
+    </ng-template>
+</div>

@@ -1,0 +1,27 @@
+body{
+    background-image: url('../assets/Football.jpg');
+    background-size: cover;
+}
+.container{
+    padding: 20px;
+}
+.navbar{
+    border-radius: 30px;
+}
+.navigationBtns{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 20px;
+    height: fit-content;
+}
+.costumStyle{
+    width: 400px;
+    height: fit-content;
+    padding: 25px;
+    margin: 10px;
+}
+.formStyle{
+    padding-top: 15px;
+}

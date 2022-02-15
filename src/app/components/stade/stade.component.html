@@ -1,0 +1,96 @@
+        <div class="container">
+            
+            <div class="table-responsive StadeTable">
+                <table class="table table-striped">
+                    <thead>
+                        <tr><th>Stade Name : </th><th>City : </th><th>Matches : </th></tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let stade of stades | paginate:{id : 'listing_pagination' , itemsPerPage : 6 , currentPage : page , totalItems : totalRecords}" style="background-color: #F8F8F8;">
+                            <td><b class="nomstade">{{stade?.nomStade}}</b></td>
+                            <td><b class="ville">{{stade?.villeStade}}</b></td>
+                            <td>
+                                <form method="post" (ngSubmit)="matcheInStadeModal(StadeMatches,stade.nomStade)">
+                                    <button type="submit" class="btn btn-success deletebtn">Matches</button>
+                                </form>
+                            </td>
+                            <td>
+                                <form method="post" (ngSubmit)="openModal(DeleteConfirmation,stade)">
+                                    <button type="submit" class="btn btn-danger deletebtn">delete</button>
+                                </form>
+                            </td>
+                          </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr><button class="btn btn-success btn-pill" (click)="open(StadeModal)">add Stade</button></tr>
+                    </tfoot>
+                </table>
+                <div class="pagination">
+                    <pagination-controls id="listing_pagination" [maxSize]="5" [directionLinks]="true" (pageChange)="page = $event"></pagination-controls>
+                </div>
+            </div>
+            <ng-template class="modal" #DeleteConfirmation let-modal>
+                <div class="modal-content">
+                    <div class="modal-header px-4">
+                        <h5 class="modal-title" id="exampleModalCenterTitle" style="text-align: center;">Team Players</h5>
+                    </div>
+                    <div class="modal-body px-4">
+                        <p>Are you sure you want to delete {{dataContent.nomStade}}</p>
+                    </div>
+                    <div class="modal-footer px-4">
+                        <button type="button" class="btn btn-smoke btn-pill" (click)="modal.dismiss('')">Close</button>
+                        <form method="post" (ngSubmit)="onDelete(dataContent.idStade)">
+                            <button type="submit" class="btn btn-smoke btn-pill" (click)="modal.close('')">Confirm</button>
+                        </form>
+                    </div>
+                </div>
+            </ng-template>
+            <ng-template class="modal" #StadeMatches let-modal>
+                <div class="modal-content">
+                    <div class="modal-header px-4">
+                        <h5 class="modal-title" id="exampleModalCenterTitle" style="text-align: center;">Matches In this Stade</h5>
+                    </div>
+                    <div class="modal-body px-4">
+                        <table class="table table-striped">
+                            <tbody *ngFor="let match of dataContent">
+                                <tr>
+                                    <td>{{match.equipes[0].nomEquipe}}</td><td>VS</td><td>{{match.equipes[1].nomEquipe}}</td>
+                                </tr>
+                                <tr><td>{{match.dateMatch}}</td><td>||</td><td>{{match.heureMatch}}</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="modal-footer px-4">
+                        <button type="button" class="btn btn-smoke btn-pill" (click)="modal.dismiss('')">Close</button>
+                    </div>
+                </div>
+            </ng-template>
+            <ng-template class="modal" #StadeModal let-modal>
+                <form #addForm="ngForm" (ngSubmit)="onAddStade(addForm)" method="post" id="myForm">
+                    <div class="modal-header px-4">
+                        <h5 class="modal-title" id="exampleModalCenterTitle">Create New Stade</h5>
+                    </div>
+                    <div class="modal-body px-4">
+    
+                        <div class="row mb-2">
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label for="name">Stade Name :</label>
+                                    <input type="text" ngModel name="nomStade" class="form-control" id="name" required/>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group mb-4">
+                                    <label for="city">Stade City : </label>
+                                    <input type="text" ngModel name="villeStade" ngModel class="form-control" required id="city"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer px-4">
+                        <button type="button" class="btn btn-smoke btn-pill" (click)="modal.dismiss()">Cancel</button>
+                        <button form="myForm" type="submit" class="btn btn-success btn-pill" (click)="modal.close()">Save Team</button>
+                    </div>
+                </form>
+            </ng-template>            
+        </div>
