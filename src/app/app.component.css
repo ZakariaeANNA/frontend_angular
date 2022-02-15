@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 body{
     background-image: url('../assets/Football.jpg');
     background-size: cover;
@@ -24,4 +25,8 @@ body{
 }
 .formStyle{
     padding-top: 15px;
+=======
+.navbar{
+    background: #f2f4f7;
+>>>>>>> c009cefb32849edb7a1f963b6522f38ee943796c
 }
