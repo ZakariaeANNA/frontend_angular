@@ -21,6 +21,7 @@ export class MatchesComponent implements OnInit {
   Data : any
   closeResult: string = '';
   heureMatch = {hour: 13, minute: 30};
+  
   ajouterMatcheForm = new FormGroup({
     dateMatch : new FormControl(),
     heureMatch : new FormControl(),
@@ -33,10 +34,6 @@ export class MatchesComponent implements OnInit {
       nom : new FormControl()
     }),
     equipes : new FormArray([
-      new FormGroup({
-        idEquipe : new FormControl(),
-        nomEquipe : new FormControl('')
-      }),
       new FormGroup({
         idEquipe : new FormControl(),
         nomEquipe : new FormControl('')
