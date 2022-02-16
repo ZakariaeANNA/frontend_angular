@@ -1,9 +1,8 @@
+import { Matche } from "./matche";
 
-import {Matche} from './matche';
-
-export interface Stade {
-    idStade : number;
-    nomStade : string;
-    villeStade : string;
-    matches : Matche[];
+export interface Stade{
+    idStade  : number,
+    nomStade : String,
+    villeStade : String,
+    matches : Matche[]
 }

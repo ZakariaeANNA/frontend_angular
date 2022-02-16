@@ -1,0 +1,19 @@
+.listeEquipe{
+    padding-top: 20px;
+}
+.equipe{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.container{
+    padding: 20px;
+}
+.nomEquipe{
+    font-size: 1.7em;
+     text-align: center;
+}
+.country{
+    font-size: 1.3em; 
+    text-align: center;
+}

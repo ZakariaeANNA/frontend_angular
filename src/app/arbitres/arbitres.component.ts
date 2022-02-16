@@ -13,23 +13,17 @@ import { NgForm } from '@angular/forms';
 })
 export class ArbitresComponent implements OnInit {
 
-  arbitres : Arbitre[];
-  newArbitre : Arbitre;
-  newArbitre1 : Arbitre;
+  Data:any
   closeResult: string = '';
   constructor(private arbitreService: ArbitreService,private modalService: NgbModal) {
-     this.arbitres = [{idArbitre:0,nom:'grgerg',nationalite:'rgcrgcrger',Matches:[]},
-     {idArbitre:1,nom:'yreryey',nationalite:'ergercgerg',Matches:[]}];
-     this.newArbitre = {idArbitre:0,nom:'htyhh',nationalite:'hhtrh',Matches:[]};
-     this.newArbitre1 = {idArbitre:0,nom:'',nationalite:'',Matches:[]}
   }
 
   ngOnInit(): void {
     this.getArbitres()
   }
 
-  open(content:any,arbitre:Arbitre) {
-    this.newArbitre = arbitre;
+  open(content:any,Data:any) {
+    this.Data = Data;
     this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
@@ -58,7 +52,7 @@ export class ArbitresComponent implements OnInit {
   public getArbitres(): void {
     this.arbitreService.getArbitres().subscribe(
       (response : Arbitre[]) => {
-        this.arbitres = response;
+        this.Data = response;
         console.log(response);
       },
       (error : HttpErrorResponse) => {

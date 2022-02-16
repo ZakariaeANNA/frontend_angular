@@ -1,8 +1,8 @@
-import {Matche} from './matche';
+import { Matche } from "./matche";
 
-export interface Arbitre {
-    idArbitre : number;
-    nom : string;
-    nationalite : string;
-    Matches : Matche[];
+export interface Arbitre{
+    idArbitre : number,
+    nom : String,
+    Nationalite : String,
+    Matches : Matche[]
 }

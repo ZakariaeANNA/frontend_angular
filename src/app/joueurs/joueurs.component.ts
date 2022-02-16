@@ -31,7 +31,8 @@ export class JoueursComponent implements OnInit {
     poste : new FormControl(),
     equipe : new FormGroup({
       idEquipe : new FormControl(),
-      nomEquipe : new FormControl()
+      nomEquipe : new FormControl(),
+      pays : new FormControl()
     }),
   })
   constructor(private joueurService:JoueurService,private modalService: NgbModal,private alertService:AlertService) {
@@ -46,7 +47,6 @@ export class JoueursComponent implements OnInit {
 
   open(content:any,Data:any) {
     this.Data = Data
-    console.log(Data)
     this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
@@ -85,12 +85,11 @@ export class JoueursComponent implements OnInit {
   }
 
   public addJoueur(){
- 
-    console.log(this.ajouterJoueurForm.value.equipe.nomEquipe)
+
     this.joueurService.GetEquipeBynomEquipe(this.ajouterJoueurForm.value.equipe.nomEquipe).subscribe(
-      (response : Response)=>{
+      (response : any)=>{
         console.log(response)
-        //this.ajouterJoueurForm.value.equipe.idEquipe = response.idEquipe
+        this.ajouterJoueurForm.value.equipe.idEquipe = response.idEquipe
         this.joueurService.addJoueur(this.ajouterJoueurForm.value).subscribe(
            (response : Response)=>{
                this.alertService.success('joueur added with success')
@@ -110,12 +109,10 @@ export class JoueursComponent implements OnInit {
   }
 
   public modifierJoueur(){
- 
-    console.log(this.modifierJoueurForm.value.equipe.nomEquipe)
-    this.joueurService.GetEquipeBynomEquipe(this.modifierJoueurForm.value.equipe.nomEquipe).subscribe(
-      (response : Response)=>{
-        console.log(response)
-        //this.modifierJoueurForm.value.equipe.idEquipe = response.idEquipe
+     this.joueurService.GetEquipeBynomEquipe(this.modifierJoueurForm.value.equipe.nomEquipe).subscribe(
+      (response : any)=>{
+        this.modifierJoueurForm.value.equipe.idEquipe = response.idEquipe
+        this.modifierJoueurForm.value.equipe.pays = response.pays
         this.joueurService.addJoueur(this.modifierJoueurForm.value).subscribe(
            (response : Response)=>{
                this.alertService.success('joueur modified with success')
@@ -125,7 +122,6 @@ export class JoueursComponent implements OnInit {
             this.alertService.danger('joueur not modified with succes')
           },
         )
-        
       },
       (error : HttpErrorResponse) => {
         this.alertService.danger('equipe modified not found')

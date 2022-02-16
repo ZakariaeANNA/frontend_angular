@@ -63,9 +63,11 @@
           <label >Poste Joueur</label>
           <input type="text" formControlName="poste" ngModel="{{Data?.poste}}" name="poste" class="form-control">
       </div>
-      <div class="mt-2">
-          <label >Nom Equipe</label>
-          <input type="text" formControlName="nomEquipe" ngModel="{{Data?.equipe?.nomEquipe}}" name="nomEquipe" class="form-control">
+      <div formGroupName="equipe">
+        <div class="mt-2">
+            <label >Nom Equipe</label>
+            <input type="text" formControlName="nomEquipe" ngModel="{{Data?.equipe?.nomEquipe}}" name="nomEquipe" class="form-control">
+        </div>
       </div>
     </div>
     <div class="modal-footer">

@@ -1,10 +1,10 @@
-import {Matche} from './matche';
-import {Joueur} from './joueur';
+import { Joueur } from "./joueur";
+import { Matche } from "./matche";
 
-export interface Equipe {
-    idEquipe : number;
-    nomEquipe : string;
-    pays : string;
-    matches : Matche[];
-    joueurs : Joueur[];
+export interface Equipe{
+    idEquipe : number,
+    nomEquipe : String,
+    pays : String,
+    matches : Matche[],
+    joueurs : Joueur[]
 }
