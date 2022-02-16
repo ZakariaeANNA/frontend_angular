@@ -23,6 +23,11 @@ export class MatcheService {
     return this.http.post<any>(`${this.apiServerUrl}/matches/add`,matche);
   }
 
+  public modifierMatche(matche : Matche): Observable<any> {
+    return this.http.put<any>(`${this.apiServerUrl}/matches/update`,matche);
+  }
+
+
   public deleteMatche(id:number):Observable<any>{
     return this.http.delete<any>(`${this.apiServerUrl}/matches/delete/${id}`);
   }
@@ -49,5 +54,9 @@ export class MatcheService {
 
   public getStadeBynomStade(nomStade:string) : Observable<any> {
     return this.http.get<any>(`${this.apiServerUrl}/stades/stade/${nomStade}`);
+  }
+
+  public getStadeAndArbitreBynom(nomStade:string,nomArbitre:string) : Observable<any> {
+    return this.http.get<any>(`${this.apiServerUrl}/matches/findStadeAndArbitre/${nomStade}/${nomArbitre}`)
   }
 }

@@ -45,7 +45,7 @@
 </ng-template>
 
 <ng-template #modifiermodal let-modal>
-    <form>
+    <form [formGroup]="modifierMatcheForm1">
       <div class="modal-header">
         <h4 class="modal-title" id="modal-basic-title">Modifier Matche</h4>
         <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
@@ -55,48 +55,46 @@
       <div class="modal-body">
         <div class="mt-2">
             <label >ID Matche</label>
-            <input type="number" [(ngModel)]= "Data.idMatch" name="idMatch" class="form-control">
+            <input type="number" ngModel= "{{Data?.idMatch}}" formControlName="idMatch" name="idMatch" class="form-control">
         </div>  
         <div class="mt-2" >
             <label >Date Matche</label>
-            <div class="input-group">
-                <input class="form-control" placeholder="dd/mm/yyyy" 
-                        name="d2" #dateMatch="ngModel" [(ngModel)]="Data.dateMatch" ngbDatepicker #d2="ngbDatepicker">
-                <div class="input-group-append">
-                  <button class="btn btn-outline-secondary calendar" (click)="d2.toggle()" type="button"></button>
-                </div>
-            </div>
+            <input type="date" id="birthday" ngModel="{{Data?.dateMatch}}" formControlName="dateMatch" name="dateMatch" class="form-control" value="{{Data?.dateMatch}}">
         </div>  
         <div class="mt-2">
             <label >Heure Matche</label>
-            <input type="time" id="input" class="form-control" value="{{Data?.heureMatch}}" mdbInput/>
+            <input type="time" id="input" ngModel="{{Data?.heureMatch}}" formControlName="heureMatch" name="heureMatch" class="form-control" value="{{Data?.heureMatch}}" mdbInput/>
         </div>
-        <div class="mt-2">
-          <label >Nom Equipe1</label>
-          <input type="text"  name="nomEquipe" class="form-control">
+        <div formArrayName="equipes" *ngFor="let equipe of Data.equipes; let i = index" >
+          <div formGroupName="{{i}}">
+              <div class="mt-2" >
+                   <label >ID Equipe {{i + 1}} </label>
+                   <input type="text" ngModel="{{equipe?.idEquipe}}" formControlName="idEquipe" name="idEquipe" class="form-control">
+              </div>
+          </div>
         </div>
-        <div class="mt-2">
-          <label >Nom Equipe2</label>
-          <input type="text"  name="nomEquipe" class="form-control">
-        </div>
-        <div class="mt-2" >
-          <label >Nom Arbitre</label>
-          <input type="text"  name="nom" class="form-control">
-        </div>  
-        <div class="mt-2" >
-          <label >Nom Stade</label>
-          <input type="text"  name="nomStade" class="form-control">
-        </div>  
+        <div formGroupName="arbitre">
+          <div class="mt-2" >
+            <label >Nom Arbitre</label>
+            <input type="text" ngModel="{{Data?.arbitre?.nom}}" formControlName="nom"  name="nom" class="form-control">
+          </div>  
+          </div> 
+          <div formGroupName="stade">
+            <div class="mt-2" >
+              <label >Nom Stade</label>
+              <input type="text" ngModel="{{Data?.stade?.nomStade}}" formControlName="nomStade" name="nomStade" class="form-control">
+            </div>  
+          </div> 
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">close</button>
-        <button type="submit"  class="btn btn-warning">Modifier</button>
+        <button type="submit" (click)="modifierMatche()" class="btn btn-warning">Modifier</button>
       </div>
   </form>
 </ng-template>
 
 <ng-template #ajoutermodal let-modal>
-    <form [formGroup]="ajouterMatcheForm">
+    <form [formGroup]="ajouterMatcheForm1">
       <div class="modal-header">
         <h4 class="modal-title" id="modal-basic-title">Ajouter Matche</h4>
         <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
@@ -106,27 +104,22 @@
       <div class="modal-body">
           <div class="mt-2" >
               <label >Date Matche</label>
-              <div class="input-group">
-                  <input class="form-control" placeholder="dd/mm/yyyy" formControlName="dateMatch"
-                        name="d2"  [(ngModel)]="Data.dateMatch" ngbDatepicker #d2="ngbDatepicker">
-                  <div class="input-group-append">
-                    <button class="btn btn-outline-secondary calendar" (click)="d2.toggle()" type="button"></button>
-                  </div>
-              </div>
+              <input type="date" id="birthday" placeholder="dd/mm/yyyy" formControlName="dateMatch" name="dateMatch" class="form-control" value="">
           </div>  
           <div class="mt-2">
               <label >Heure Matche</label>
               <input type="time" id="input" formControlName="heureMatch" name="heureMatch" class="form-control" value="" mdbInput/>
           </div>
-          <div formArrayName="equipes">
-          <ng-container >
-            <div formGroupName="equipeFormGroup">
+          <div formArrayName="equipes" *ngFor="let emp of getequipes.controls; let i = index">
+            <div formGroupName="{{i}}">
                 <div class="mt-2">
-                     <label >Nom Equipe</label>
-                     <input type="text" formControlName="nomEquipe" name="nomEquipe" class="form-control">
+                     <label >ID Equipe {{i + 1}} </label>
+                     <input type="text" formControlName="idEquipe" name="idEquipe" class="form-control">
                 </div>
             </div>
-         </ng-container>
+          </div>
+          <div class="mt-2">
+            <button type="submit" (click)="addEquipeInput()" class="btn btn-success">Ajouter Equipe</button>
           </div>
           <div formGroupName="arbitre">
           <div class="mt-2" >
