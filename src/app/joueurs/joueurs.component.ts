@@ -6,6 +6,7 @@ import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import { FormControl, FormGroup } from '@angular/forms';
 import { AlertService } from 'ngx-alerts';
 import { Equipe } from '../shared/models/equipe';
+import { AuthService } from '../shared/services/auth.service';
 
 @Component({
   selector: 'app-joueurs',
@@ -35,7 +36,7 @@ export class JoueursComponent implements OnInit {
       pays : new FormControl()
     }),
   })
-  constructor(private joueurService:JoueurService,private modalService: NgbModal,private alertService:AlertService) {
+  constructor(private joueurService:JoueurService,private modalService: NgbModal,private alertService:AlertService,public authService:AuthService) {
     this.joueurs = [];
   }
 

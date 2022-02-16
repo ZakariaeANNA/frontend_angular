@@ -1,26 +1,30 @@
 <div class="container">
-    <form #f="ngForm" (ngSubmit)="onSubmitLogin(f)" class="formLogin">
-        <div class="title text-center">Login Form</div>
-        <div class="mb-3">
-          <input type="text" name="username" ngModel class="form-control" id="usernameInput" aria-describedby="usernameHelp" placeholder="Username" #username="ngModel">
+    <div class="card shadow">
+        <div class="card-body">
+            <form #f="ngForm" (ngSubmit)="onSubmitLogin(f)">
+                <div class="title text-center">Login Form</div>
+                <div class="mb-3">
+                  <input type="text" name="username" ngModel class="form-control" id="usernameInput" aria-describedby="usernameHelp" placeholder="Username" #username="ngModel">
+                </div>
+                <div class="mb-3">
+                  <input type="password" name="password" ngModel class="form-control" id="exampleInputPassword1" placeholder="Password" #password="ngModel">
+                </div>
+                <div class="mb-3 form-check">
+                  <input type="checkbox" class="form-check-input" ngModel id="exampleCheck1">
+                  <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                </div>
+                <div class="mb-3 text-center">
+                    <button type="submit" class="btn w-100 btn-dark ">Log In</button>
+                </div>
+                <div class="mb-3 text-center">
+                    <a href="#">Forgot Password ?</a>
+                </div>
+                <div class="mb-3 text-center">
+                    <button type="button" class="btn btn-outline-success" (click)="open(mymodal)">Create new Account</button>
+                </div>
+            </form>
         </div>
-        <div class="mb-3">
-          <input type="password" name="password" ngModel class="form-control" id="exampleInputPassword1" placeholder="Password" #password="ngModel">
-        </div>
-        <div class="mb-3 form-check">
-          <input type="checkbox" class="form-check-input" ngModel id="exampleCheck1">
-          <label class="form-check-label" for="exampleCheck1">Check me out</label>
-        </div>
-        <div class="mb-3 text-center">
-            <button type="submit" class="btn w-100 btn-dark ">Log In</button>
-        </div>
-        <div class="mb-3 text-center">
-            <a href="#">Forgot Password ?</a>
-        </div>
-        <div class="mb-3 text-center">
-            <button type="button" class="btn btn-outline-success" (click)="open(mymodal)">Create new Account</button>
-        </div>
-    </form>
+    </div>
 </div>
 
 <ng-template #mymodal let-modal>
@@ -48,7 +52,7 @@
                 <input type="text" name="lastName" ngModel #lastName="ngModel" class="form-control" id="lastNameInput" placeholder="Last Name">
             </div>
             <div class="input-group">
-                <input class="form-control" placeholder="dd/mm/yyyy" name="birthDate" ngModel #birthDate="ngModel" [(ngModel)]="model" ngbDatepicker #d="ngbDatepicker">
+                <input class="form-control" placeholder="dd/mm/yyyy" name="birthDate" ngModel #birthDate="ngModel" ngbDatepicker #d="ngbDatepicker">
                 <div class="input-group-append">
                 <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"><i class="bi bi-calendar"></i></button>
                 </div>

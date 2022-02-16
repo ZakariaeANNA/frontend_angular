@@ -7,19 +7,22 @@
     <div class="collapse navbar-collapse" [ngClass]="{ 'show': navbarOpen }" id="navbarSupportedContent">
       <ul class="navbar-nav ml-auto" *ngIf="authService.loggedIn()">
         <li class="nav-item active">
-          <a class="nav-link" href="#">Match <span class="sr-only">(current)</span></a>
+          <a class="nav-link" [routerLink]="['matches']">Match <span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Arbitre</a>
+          <a class="nav-link" [routerLink]="['arbitres']">Arbitre</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Stade</a>
+          <a class="nav-link" [routerLink]="['stade']">Stade</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Equipe</a>
+          <a class="nav-link" [routerLink]="['equipe']">Equipe</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Joueur</a>
+          <a class="nav-link" [routerLink]="['joueurs']">Joueur</a>
+        </li>
+        <li class="nav-item" *ngIf="authService.isAdmin()">
+          <button class="nav-link" (click)="open(mymodal)">Add User</button>
         </li>
         <li class="nav-item dropdown" dropdown>
           <a class="nav-link dropdown-toggle" href="#" dropdownToggle id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -39,3 +42,49 @@
       </ul>
     </div>
   </nav>
+
+<ng-template #mymodal let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title font-bold" id="modal-basic-title">Register Form</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">×</span>
+      </button>
+    </div>
+    <div class="modal-body">
+        <form #fregister="ngForm" (ngSubmit)="onSubmitRegister(fregister)">
+            <div class="mb-3">
+                <input type="text" name="username" ngModel #username="ngModel" class="form-control" id="usernameInput" aria-describedby="usernameHelp" placeholder="Username">
+            </div>
+            <div class="mb-3">
+                <input type="password" name="password" ngModel #password="ngModel" class="form-control" id="exampleInputPassword1" placeholder="Password">
+            </div>
+            <div class="mb-3">
+                <input type="email" name="email" ngModel #email="ngModel" class="form-control" id="emailInput" aria-describedby="emailHelp" placeholder="Email">
+            </div>
+            <div class="mb-3">
+                <input type="text" name="firstName" ngModel #firstName="ngModel" class="form-control" id="firstNameInput" placeholder="First Name">
+            </div>
+            <div class="mb-3">
+                <input type="text" name="lastName" ngModel #lastName="ngModel" class="form-control" id="lastNameInput" placeholder="Last Name">
+            </div>
+            <div class="form-group">
+              <select class="form-control" id="exampleFormControlSelect2" name="roles" ngModel #roles="ngModel" >
+                <option value="ROLE_EMPLOYEE" selected>Employee</option>
+                <option value="ROLE_ADMIN">Admin</option>
+              </select>
+            </div>
+            <div class="input-group">
+                <input class="form-control" placeholder="dd/mm/yyyy" name="birthDate" ngModel #birthDate="ngModel"  ngbDatepicker #d="ngbDatepicker">
+                <div class="input-group-append">
+                <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"><i class="bi bi-calendar"></i></button>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-danger w-25" (click)="modal.close('Save click')">Cancel</button>
+                <button type="submit" class="btn btn-primary w-50" (click)="modal.close('Save click')">Add User</button>
+            </div>
+        </form>
+        
+    </div>
+    
+</ng-template>

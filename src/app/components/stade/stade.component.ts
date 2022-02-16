@@ -7,6 +7,7 @@ import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Equipe } from 'src/app/shared/models/equipe';
 import { Matche } from 'src/app/shared/models/matche';
 import { AlertService } from 'ngx-alerts';
+import { AuthService } from 'src/app/shared/services/auth.service';
 
 @Component({
   selector: 'app-stade',
@@ -20,7 +21,8 @@ export class StadeComponent implements OnInit {
   public page  : number = 1
   public dataContent : any
 
-  constructor(private stadeService  : StadeService , private modelService : NgbModal , private alertService : AlertService) { }
+  constructor(private stadeService  : StadeService , private modelService : NgbModal , private alertService : AlertService
+              ,public authService:AuthService) { }
 
   ngOnInit(): void {
     this.getStades()

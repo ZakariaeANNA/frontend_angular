@@ -15,7 +15,7 @@
                                     <button type="submit" class="btn btn-success deletebtn">Matches</button>
                                 </form>
                             </td>
-                            <td>
+                            <td *ngIf="authService.isAdmin()">
                                 <form method="post" (ngSubmit)="openModal(DeleteConfirmation,stade)">
                                     <button type="submit" class="btn btn-danger deletebtn">delete</button>
                                 </form>
@@ -23,7 +23,7 @@
                             </tr>
                     </tbody>
                 </table>
-                <div class="py-4">
+                <div class="py-4" *ngIf="authService.isAdmin() || authService.isEmployee()">
                     <button class="btn btn-success btn-pill" (click)="open(StadeModal)">add Stade</button>
                 </div>
                 <div class="pagination">

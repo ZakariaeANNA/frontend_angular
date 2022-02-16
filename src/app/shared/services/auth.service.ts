@@ -34,4 +34,22 @@ export class AuthService {
       return decoded.sub;
     }
   }
+  getAccessToken(){
+    const token = localStorage.getItem("access_token") || "";
+    return token;
+  }
+  isAdmin(){
+    const token = localStorage.getItem("access_token") || "";
+    if(!this.helper.isTokenExpired(token)){
+      var decoded = this.helper.decodeToken(token);
+      return decoded.roles.includes("ROLE_ADMIN");
+    }
+  }
+  isEmployee(){
+    const token = localStorage.getItem("access_token") || "";
+    if(!this.helper.isTokenExpired(token)){
+      var decoded = this.helper.decodeToken(token);
+      return decoded.roles.includes("ROLE_EMPLOYEE");
+    }
+  }
 }

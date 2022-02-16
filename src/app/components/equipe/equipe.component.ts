@@ -6,6 +6,7 @@ import { Joueur } from 'src/app/shared/models/joueur';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { EquipeService } from 'src/app/shared/services/equipe.service';
 import { AlertService } from 'ngx-alerts';
+import { AuthService } from 'src/app/shared/services/auth.service';
 
 @Component({
   selector: 'app-equipe',
@@ -18,7 +19,8 @@ export class EquipeComponent implements OnInit {
   public totalRecords  : number = 0
   public page  : number = 1
   public dataContent : any;
-  constructor(private equipeService  : EquipeService , private modelService : NgbModal , private alertService : AlertService) {}
+  constructor(private equipeService  : EquipeService , private modelService : NgbModal , private alertService : AlertService,
+              public authService:AuthService) {}
 
   ngOnInit(): void {
     this.getEquipes()

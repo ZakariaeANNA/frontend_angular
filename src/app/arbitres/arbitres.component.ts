@@ -4,6 +4,7 @@ import {ArbitreService} from '../shared/services/arbitre.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import { NgForm } from '@angular/forms';
+import { AuthService } from '../shared/services/auth.service';
 
 
 @Component({
@@ -15,7 +16,7 @@ export class ArbitresComponent implements OnInit {
 
   Data:any
   closeResult: string = '';
-  constructor(private arbitreService: ArbitreService,private modalService: NgbModal) {
+  constructor(private arbitreService: ArbitreService,private modalService: NgbModal,public authService:AuthService) {
   }
 
   ngOnInit(): void {

@@ -13,7 +13,7 @@ const routes: Routes = [
   {path : "arbitres" , component : ArbitresComponent},
   {path : "joueurs" , component : JoueursComponent},
   {path : "matches" , component : MatchesComponent},
-  {path : "" , redirectTo : "arbitres" , pathMatch : "full"}
+
 ];
 
 @NgModule({

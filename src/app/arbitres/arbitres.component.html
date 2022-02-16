@@ -7,8 +7,8 @@
                         <th>Id</th>
                         <th>Nom</th>
                         <th>Nationalite</th>
-                        <th>Delete</th>
-                        <th>Modifier</th>
+                        <th *ngIf="authService.isAdmin()">Delete</th>
+                        <th *ngIf="authService.isAdmin() || authService.isEmployee()">Modifier</th>
                     </tr>
                 </thead>
                 <tbody >
@@ -16,12 +16,14 @@
                         <td>{{Data.idArbitre}}</td>
                         <td>{{Data.nom}}</td>
                         <td>{{Data.nationalite}}</td>
-                        <td><button type="button" class="btn btn-danger" (click)="open(deletemodal,arbitre)">delete</button></td>
-                        <td><button type="button" class="btn btn-warning" (click)="open(modifiermodal,arbitre)">modifier</button></td>
+                        <td *ngIf="authService.isAdmin()"><button type="button" class="btn btn-danger" (click)="open(deletemodal,arbitre)">delete</button></td>
+                        <td *ngIf="authService.isAdmin() || authService.isEmployee()"><button type="button" class="btn btn-warning" (click)="open(modifiermodal,arbitre)">modifier</button></td>
                     </tr>
                 </tbody>
             </table>
-            <button type="button" class="btn btn-success"  (click)="open1(ajoutermodal)">Ajouter Arbitre</button>
+            <div *ngIf="authService.isAdmin() || authService.isEmployee()">
+              <button type="button" class="btn btn-success"  (click)="open1(ajoutermodal)">Ajouter Arbitre</button>
+            </div>
         </div>
     </div>
 </div>

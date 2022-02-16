@@ -14,7 +14,7 @@
                             <tr>
                                 <td><b class="nomEquipe">{{equipe?.nomEquipe}}</b></td>
                                 <td><b class="country">{{equipe?.pays}}</b></td>
-                                <td>
+                                <td *ngIf="authService.isAdmin()">
                                     <form method="post" (ngSubmit)="openModal(DeleteConfirmation,equipe)">
                                         <button class="btn btn-danger">delete</button>
                                     </form>
@@ -27,7 +27,7 @@
                             </tr>
                         </tbody>
                     </table>
-                    <div>
+                    <div *ngIf="authService.isAdmin() || authService.isEmployee()">
                         <button class="btn btn-success" role="button" data-toggle="modal" (click)="open(TeamModal)">Add Team</button>
                     </div>
                     <div class="py-4">

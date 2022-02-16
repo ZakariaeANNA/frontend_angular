@@ -7,7 +7,7 @@
                         <th>Id</th>
                         <th>Nom</th>
                         <th>Poste</th>
-                        <th>Delete</th>
+                        <th *ngIf="authService.isAdmin()">Delete</th>
                         <th>Modifier</th>
                     </tr>
                 </thead>
@@ -16,12 +16,14 @@
                         <td>{{joueur.idJoueur}}</td>
                         <td>{{joueur.nomJoueur}}</td>
                         <td>{{joueur.poste}}</td>
-                        <td><button type="button" class="btn btn-danger" (click)="open(deletemodal,joueur)">delete</button></td>
-                        <td><button type="button" class="btn btn-warning" (click)="open(modifiermodal,joueur)">modifier</button></td>
+                        <td *ngIf="authService.isAdmin()"><button type="button" class="btn btn-danger" (click)="open(deletemodal,joueur)">delete</button></td>
+                        <td *ngIf="authService.isAdmin() || authService.isEmployee()"><button type="button" class="btn btn-warning" (click)="open(modifiermodal,joueur)">modifier</button></td>
                     </tr>
                 </tbody>
             </table>
-            <button type="button" class="btn btn-success" (click)="open1(ajoutermodal)">Ajouter Joueur</button>
+            <div *ngIf="authService.isAdmin() || authService.isEmployee()">
+              <button  type="button" class="btn btn-success" (click)="open1(ajoutermodal)">Ajouter Joueur</button>
+            </div>
         </div>
     </div>
 </div>
