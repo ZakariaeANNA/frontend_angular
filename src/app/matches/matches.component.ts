@@ -8,7 +8,9 @@ import { MatcheService } from '../shared/services/matche.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import {NgbModal, ModalDismissReasons,NgbDateAdapter} from '@ng-bootstrap/ng-bootstrap';
 import { NgForm } from '@angular/forms';
-import { FormControl, FormGroup,FormArray } from '@angular/forms';
+import { FormControl, FormGroup,FormArray, FormBuilder  } from '@angular/forms';
+import * as moment from 'moment';
+import { AlertService } from 'ngx-alerts';
 
 @Component({
   selector: 'app-matches',
@@ -21,7 +23,14 @@ export class MatchesComponent implements OnInit {
   Data : any
   closeResult: string = '';
   heureMatch = {hour: 13, minute: 30};
+<<<<<<< HEAD
+  ajouterMatcheForm1 : any;
+  modifierMatcheForm1 : any;
+ 
+
+=======
   
+>>>>>>> a9f2b1cede8370c38878dccfb49f403e2775d866
   ajouterMatcheForm = new FormGroup({
     dateMatch : new FormControl(),
     heureMatch : new FormControl(),
@@ -36,8 +45,17 @@ export class MatchesComponent implements OnInit {
     equipes : new FormArray([
       new FormGroup({
         idEquipe : new FormControl(),
+<<<<<<< HEAD
+        nomEquipe : new FormControl()
+      }),
+      new FormGroup({
+        idEquipe : new FormControl(),
+        nomEquipe : new FormControl()
+      }),
+=======
         nomEquipe : new FormControl('')
       })
+>>>>>>> a9f2b1cede8370c38878dccfb49f403e2775d866
     ])
   })
   modifierMatcheForm = new FormGroup({
@@ -59,17 +77,62 @@ export class MatchesComponent implements OnInit {
       })
     ])
   })
-  constructor(private matcheService:MatcheService,private modalService: NgbModal) {
+  constructor(private matcheService:MatcheService,private modalService: NgbModal,private fb: FormBuilder,private alertService:AlertService) {
      
      this.matches = []
   }
 
   ngOnInit(): void {
     this.getMatches();
+    this.DeleteMatchePass();
+    this.ajouterMatcheForm1 = this.fb.group({
+      dateMatch: [],
+      heureMatch: [],
+      stade : this.fb.group({
+      idStade: [],
+      nomStade: [],
+      }),
+      arbitre : this.fb.group({
+      idArbitre: [],
+      nom: []
+      }),
+      equipes: this.fb.array([
+        this.fb.group({
+          idEquipe: [],
+        }),
+        this.fb.group({
+          idEquipe: [],
+        }),
+      ])
+    });
+    this.modifierMatcheForm1 = this.fb.group({
+      idMatch : [],
+      dateMatch: [],
+      heureMatch: [],
+      stade : this.fb.group({
+      idStade: [],
+      nomStade: [],
+      villeStade : [],
+      }),
+      arbitre : this.fb.group({
+      idArbitre: [],
+      nom: [],
+      nationalite : []
+      }),
+      equipes: this.fb.array([
+        this.fb.group({
+          idEquipe: [],
+        }),
+        this.fb.group({
+          idEquipe: [],
+        }),
+      ])
+    });
   }
 
   open(content:any,Data:any) {
     this.Data = Data;
+    console.log(Data.dateMatch)
     this.modalService.open(content,{ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
@@ -110,6 +173,7 @@ export class MatchesComponent implements OnInit {
   }
 
   public deleteMatche(id:number){
+    console.log(id)
     this.matcheService.deleteMatche(id).subscribe(
       (response : void)=>{
         console.log(response);
@@ -122,7 +186,90 @@ export class MatchesComponent implements OnInit {
   }
 
   public addMatche(){
-    console.log(this.ajouterMatcheForm.value)
+    console.log(this.ajouterMatcheForm1.value)
+    
+    this.matcheService.getStadeAndArbitreBynom(this.ajouterMatcheForm1.value.stade.nomStade
+      ,this.ajouterMatcheForm1.value.arbitre.nom).subscribe(
+        (response : any)=>{
+          console.log(response)
+          this.ajouterMatcheForm1.value.dateMatch = moment(this.ajouterMatcheForm1.value.dateMatch).format("DD/MM/yyyy");
+          this.ajouterMatcheForm1.value.stade.idStade = response.stade.idStade
+          this.ajouterMatcheForm1.value.arbitre.idArbitre = response.arbitre.idArbitre
+          this.matcheService.addMatche(this.ajouterMatcheForm1.value).subscribe(
+             (response : Response)=>{
+                 this.alertService.success('matche added with success')
+                 this.getMatches()
+             },
+             (error : HttpErrorResponse) => {
+              this.alertService.danger('matche not added with succes')
+            },
+          )
+          
+        },
+        (error : HttpErrorResponse) => {
+          this.alertService.danger('arbitre or stade not found')
+        },
+      )
   }
 
+  public modifierMatche(){
+    console.log(this.modifierMatcheForm1.value)
+    this.matcheService.getStadeAndArbitreBynom(this.modifierMatcheForm1.value.stade.nomStade
+      ,this.modifierMatcheForm1.value.arbitre.nom).subscribe(
+        (response : any)=>{
+          console.log(response)
+          this.modifierMatcheForm1.value.dateMatch = moment(this.modifierMatcheForm1.value.dateMatch).format("DD/MM/yyyy");
+          this.modifierMatcheForm1.value.stade = response.stade
+          this.modifierMatcheForm1.value.arbitre = response.arbitre
+          this.matcheService.modifierMatche(this.modifierMatcheForm1.value).subscribe(
+             (response : Response)=>{
+                 this.alertService.success('matche modified with success')
+                 this.getMatches()
+             },
+             (error : HttpErrorResponse) => {
+              this.alertService.danger('matche not modified with succes')
+            },
+          )
+          
+        },
+        (error : HttpErrorResponse) => {
+          this.alertService.danger('arbitre or stade modified not found')
+        },
+      )
+  }
+
+  get getequipes(): FormArray {
+    return this.ajouterMatcheForm1.get('equipes') as FormArray;
+  }
+
+  get getequipesmodifiers(): FormArray {
+    return this.modifierMatcheForm1.get('equipes') as FormArray;
+  }
+
+  newEquipe(): FormGroup {
+    return this.fb.group({
+      idEquipe: [],
+      nomEquipe: []
+    });
+  }
+
+  newEquipeModifier(): FormGroup {
+    return this.fb.group({
+      idEquipe: [],
+    });
+  }
+
+  public addEquipeInput(idEquipe=0,nomEquipe=''){
+    const equipes = this.ajouterMatcheForm1.get('equipes') as FormArray;
+    equipes.push(this.newEquipe());
+  }
+
+  public addEquipeModifierInput(){
+    const equipes = this.modifierMatcheForm1.get('equipes') as FormArray;
+    equipes.push(this.newEquipeModifier());
+  }
+
+  public DeleteMatchePass(){
+    this.matcheService.deleteMatchesPasses()
+  }
 }
