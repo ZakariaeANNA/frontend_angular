@@ -15,7 +15,7 @@ export class EquipeService {
   constructor(private http : HttpClient,private authService:AuthService) {
     let access_token = authService.getAccessToken();
     this.headers = new Headers();
-    this.headers.append('access_token',access_token);
+    this.headers.append('access_token',"Token "+access_token);
    }
 
   public getEquipes() : Observable<any>{

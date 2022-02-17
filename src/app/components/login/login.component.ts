@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
-import { AuthService } from '../shared/services/auth.service';
+import { AuthService } from '../../shared/services/auth.service';
 import * as moment from 'moment';
-import { Token } from "../shared/models/Token";
+import { Token } from "../../shared/models/Token";
 import { HttpErrorResponse, JsonpClientBackend } from '@angular/common/http';
 import { AlertModule, AlertService } from 'ngx-alerts';
 import { Router } from '@angular/router';

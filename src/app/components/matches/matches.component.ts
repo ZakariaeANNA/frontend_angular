@@ -1,16 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-import {Matche} from '../shared/models/matche';
-import {Arbitre} from '../shared/models/arbitre';
-import {Stade} from '../shared/models/stade';
-import {Equipe} from '../shared/models/equipe';
-import {Joueur} from '../shared/models/joueur';
-import { MatcheService } from '../shared/services/matche.service';
+import {Matche} from '../../shared/models/matche';
+import {Arbitre} from '../../shared/models/arbitre';
+import {Stade} from '../../shared/models/stade';
+import {Equipe} from '../../shared/models/equipe';
+import {Joueur} from '../../shared/models/joueur';
+import { MatcheService } from '../../shared/services/matche.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import {NgbModal, ModalDismissReasons,NgbDateAdapter} from '@ng-bootstrap/ng-bootstrap';
 import { NgForm } from '@angular/forms';
 import { FormControl, FormGroup,FormArray, FormBuilder  } from '@angular/forms';
 import * as moment from 'moment';
 import { AlertService } from 'ngx-alerts';
+import { AuthService } from '../../shared/services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-matches',
@@ -23,14 +25,10 @@ export class MatchesComponent implements OnInit {
   Data : any
   closeResult: string = '';
   heureMatch = {hour: 13, minute: 30};
-<<<<<<< HEAD
   ajouterMatcheForm1 : any;
   modifierMatcheForm1 : any;
  
 
-=======
-  
->>>>>>> a9f2b1cede8370c38878dccfb49f403e2775d866
   ajouterMatcheForm = new FormGroup({
     dateMatch : new FormControl(),
     heureMatch : new FormControl(),
@@ -45,17 +43,12 @@ export class MatchesComponent implements OnInit {
     equipes : new FormArray([
       new FormGroup({
         idEquipe : new FormControl(),
-<<<<<<< HEAD
         nomEquipe : new FormControl()
       }),
       new FormGroup({
         idEquipe : new FormControl(),
         nomEquipe : new FormControl()
       }),
-=======
-        nomEquipe : new FormControl('')
-      })
->>>>>>> a9f2b1cede8370c38878dccfb49f403e2775d866
     ])
   })
   modifierMatcheForm = new FormGroup({
@@ -77,12 +70,15 @@ export class MatchesComponent implements OnInit {
       })
     ])
   })
-  constructor(private matcheService:MatcheService,private modalService: NgbModal,private fb: FormBuilder,private alertService:AlertService) {
-     
+  constructor(private matcheService:MatcheService,private modalService: NgbModal,private fb: FormBuilder,private alertService:AlertService
+        ,public authService:AuthService,private router:Router) {
      this.matches = []
   }
 
   ngOnInit(): void {
+    if(!this.authService.loggedIn()){
+      this.router.navigate(['/login']);
+    }
     this.getMatches();
     this.DeleteMatchePass();
     this.ajouterMatcheForm1 = this.fb.group({
@@ -186,8 +182,6 @@ export class MatchesComponent implements OnInit {
   }
 
   public addMatche(){
-    console.log(this.ajouterMatcheForm1.value)
-    
     this.matcheService.getStadeAndArbitreBynom(this.ajouterMatcheForm1.value.stade.nomStade
       ,this.ajouterMatcheForm1.value.arbitre.nom).subscribe(
         (response : any)=>{
@@ -213,7 +207,6 @@ export class MatchesComponent implements OnInit {
   }
 
   public modifierMatche(){
-    console.log(this.modifierMatcheForm1.value)
     this.matcheService.getStadeAndArbitreBynom(this.modifierMatcheForm1.value.stade.nomStade
       ,this.modifierMatcheForm1.value.arbitre.nom).subscribe(
         (response : any)=>{
@@ -253,7 +246,7 @@ export class MatchesComponent implements OnInit {
     });
   }
 
-  newEquipeModifier(): FormGroup {
+  newEquipeModifier(): FormGroup { 
     return this.fb.group({
       idEquipe: [],
     });

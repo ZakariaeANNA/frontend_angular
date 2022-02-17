@@ -1,0 +1,10 @@
+h1{
+    font-size:80px;
+    font-weight:800;
+    text-align:center;
+    font-family: 'Roboto', sans-serif;
+}
+.container{
+    margin: 0 auto;
+    margin-top:15%;
+}

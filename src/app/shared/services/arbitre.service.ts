@@ -14,12 +14,20 @@ export class ArbitreService {
 
   constructor(private http: HttpClient,private authService:AuthService) {
     let access_token = authService.getAccessToken();
-    this.headers = new Headers();
-    this.headers.append('access_token',access_token);
+    this.headers =  new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': ' http://localhost:4200',
+      'Access-Control-Allow-Credentials': 'true',
+      'Access-Control-Allow-Methods': ' POST, GET, OPTIONS, DELETE',
+      'Access-Control-Max-Age': ' 3600',
+      'Access-Control-Allow-Headers': 'Content-Type, Accept, X-Requested-With, remember-me',
+      "access_token":access_token,
+    });
+    console.log(this.headers)
   }
 
   public getArbitres(): Observable<any> {
-    return this.http.get<any>(`${this.apiServerUrl}/arbitres/all`, this.headers);
+    return this.http.get<any>(`${this.apiServerUrl}/arbitres/all`, this.headers );
   }
 
   public addArbitre(arbitre : Arbitre): Observable<any> {

@@ -10,9 +10,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { EquipeService } from './shared/services/equipe.service';
 import { StadeService } from './shared/services/stade.service';
-import { MatchesComponent } from './matches/matches.component';
-import { ArbitresComponent } from './arbitres/arbitres.component';
-import { JoueursComponent } from './joueurs/joueurs.component';
+import { MatchesComponent } from './components/matches/matches.component';
+import { ArbitresComponent } from './components/arbitres/arbitres.component';
+import { JoueursComponent } from './components/joueurs/joueurs.component';
 import {JoueurService} from './shared/services/joueur.service';
 import {ArbitreService} from './shared/services/arbitre.service';
 import { MatcheService } from './shared/services/matche.service';
@@ -28,7 +28,7 @@ import { SharedModule } from './shared/shared/shared.module';
     EquipeComponent,
     MatchesComponent,
     ArbitresComponent,
-    JoueursComponent
+    JoueursComponent,
   ],
   imports: [
     BrowserModule,
@@ -44,7 +44,7 @@ import { SharedModule } from './shared/shared/shared.module';
     AlertModule.forRoot({maxMessages:5,timeout:5000,positionX:"right"}),
     BrowserAnimationsModule
   ],
-  providers: [MatcheService,EquipeService, StadeService],
+  providers: [MatcheService,EquipeService, ArbitreService,JoueurService,StadeService],
   bootstrap: [AppComponent, StadeComponent , EquipeComponent] 
 })
 export class AppModule { }

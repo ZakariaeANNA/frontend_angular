@@ -11,11 +11,11 @@
                         <th *ngIf="authService.isAdmin() || authService.isEmployee()">Modifier</th>
                     </tr>
                 </thead>
-                <tbody >
-                    <tr *ngFor="let arbitre of Data">
-                        <td>{{Data.idArbitre}}</td>
-                        <td>{{Data.nom}}</td>
-                        <td>{{Data.nationalite}}</td>
+                <tbody *ngFor="let arbitre of arbitres" >
+                    <tr>
+                        <td>{{arbitre.idArbitre}}</td>
+                        <td>{{arbitre.nom}}</td>
+                        <td>{{arbitre.nationalite}}</td>
                         <td *ngIf="authService.isAdmin()"><button type="button" class="btn btn-danger" (click)="open(deletemodal,arbitre)">delete</button></td>
                         <td *ngIf="authService.isAdmin() || authService.isEmployee()"><button type="button" class="btn btn-warning" (click)="open(modifiermodal,arbitre)">modifier</button></td>
                     </tr>
@@ -56,7 +56,7 @@
     
       <div class="mt-2">
           <label >ID Arbitre</label>
-          <input disabled type="text" ngModel="{{Data?.idArbitre}}" name="idArbitre" class="form-control">
+          <input readonly type="text" ngModel="{{Data?.idArbitre}}" name="idArbitre" class="form-control">
       </div>  
       <div class="mt-2" >
           <label >Nom Arbitre</label>
@@ -121,7 +121,7 @@
         <form>
           <div class="mt-2">
               <label >ID Arbitre</label>
-              <input type="number"[(ngModel)]= "Data.idArbitre" name="idArbitre" class="form-control">
+              <input type="number" ngModel= "{{Data?.idArbitre}}" name="idArbitre" class="form-control">
           </div>  
           <div class="mt-2">
              <button type="submit"  class="btn btn-success">Delete</button>
@@ -150,16 +150,16 @@
         <form>
           <div class="mt-2">
               <label >ID Arbitre</label>
-              <input type="number"[(ngModel)]= "Data.idArbitre" name="idArbitre" class="form-control">
+              <input type="number" ngModel= "{{Data?.idArbitre}}" name="idArbitre" class="form-control">
           </div>  
           <div class="mt-2" >
               <label >Nom Arbitre</label>
-              <input type="text"[(ngModel)]= "Data.nom" name="nom" class="form-control">
+              <input type="text" ngModel= "{{Data?.nom}}" name="nom" class="form-control">
           </div>  
       
           <div class="mt-2">
               <label >Nationalite Arbitre</label>
-              <input type="text" [(ngModel)]= "Data.nationalite" name="nationalite" class="form-control">
+              <input type="text" ngModel= "{{Data?.nationalite}}" name="nationalite" class="form-control">
           </div>
       
           <div class="mt-2">
@@ -190,12 +190,12 @@
         <form>
           <div class="mt-2" >
               <label >Nom Arbitre</label>
-              <input type="text"[(ngModel)]= "Data.nom" name="nom" class="form-control">
+              <input type="text"  ngModel= "{{Data?.nom}}" name="nom" class="form-control">
           </div>  
       
           <div class="mt-2">
               <label >Nationalite Arbitre</label>
-              <input type="text" [(ngModel)]= "Data.nationalite" name="nationalite" class="form-control">
+              <input type="text" ngModel= "{{Data?.nationalite}}" name="nationalite" class="form-control">
           </div>
       
           <div class="mt-2">

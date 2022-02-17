@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import {Joueur} from '../shared/models/joueur';
-import {JoueurService} from '../shared/services/joueur.service';
+import {Joueur} from '../../shared/models/joueur';
+import {JoueurService} from '../../shared/services/joueur.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import { FormControl, FormGroup } from '@angular/forms';
 import { AlertService } from 'ngx-alerts';
-import { Equipe } from '../shared/models/equipe';
-import { AuthService } from '../shared/services/auth.service';
+import { Equipe } from '../../shared/models/equipe';
+import { AuthService } from '../../shared/services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-joueurs',
@@ -36,12 +37,16 @@ export class JoueursComponent implements OnInit {
       pays : new FormControl()
     }),
   })
-  constructor(private joueurService:JoueurService,private modalService: NgbModal,private alertService:AlertService,public authService:AuthService) {
+  constructor(private joueurService:JoueurService,private modalService: NgbModal,private alertService:AlertService,public authService:AuthService
+      ,private router:Router) {
     this.joueurs = [];
   }
 
   
   ngOnInit(): void {
+    if(!this.authService.loggedIn()){
+      this.router.navigate(['/login']);
+    }
     this.getJoueurs();
 
   }

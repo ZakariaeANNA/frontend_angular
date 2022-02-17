@@ -8,6 +8,7 @@ import { Equipe } from 'src/app/shared/models/equipe';
 import { Matche } from 'src/app/shared/models/matche';
 import { AlertService } from 'ngx-alerts';
 import { AuthService } from 'src/app/shared/services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-stade',
@@ -22,9 +23,12 @@ export class StadeComponent implements OnInit {
   public dataContent : any
 
   constructor(private stadeService  : StadeService , private modelService : NgbModal , private alertService : AlertService
-              ,public authService:AuthService) { }
+              ,public authService:AuthService,private router:Router) { }
 
   ngOnInit(): void {
+    if(!this.authService.loggedIn()){
+      this.router.navigate(['/login']);
+    }
     this.getStades()
   }
   public getStades(){

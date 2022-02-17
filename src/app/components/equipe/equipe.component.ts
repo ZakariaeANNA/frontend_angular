@@ -7,6 +7,7 @@ import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { EquipeService } from 'src/app/shared/services/equipe.service';
 import { AlertService } from 'ngx-alerts';
 import { AuthService } from 'src/app/shared/services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-equipe',
@@ -20,9 +21,12 @@ export class EquipeComponent implements OnInit {
   public page  : number = 1
   public dataContent : any;
   constructor(private equipeService  : EquipeService , private modelService : NgbModal , private alertService : AlertService,
-              public authService:AuthService) {}
+              public authService:AuthService,private router:Router) {}
 
   ngOnInit(): void {
+    if(!this.authService.loggedIn()){
+      this.router.navigate(['/login']);
+    }
     this.getEquipes()
   }
   

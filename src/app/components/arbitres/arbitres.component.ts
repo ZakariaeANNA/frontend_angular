@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import {Arbitre} from '../shared/models/arbitre';
-import {ArbitreService} from '../shared/services/arbitre.service';
+import {Arbitre} from '../../shared/models/arbitre';
+import {ArbitreService} from '../../shared/services/arbitre.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import { NgForm } from '@angular/forms';
-import { AuthService } from '../shared/services/auth.service';
+import { AuthService } from '../../shared/services/auth.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -15,12 +16,18 @@ import { AuthService } from '../shared/services/auth.service';
 export class ArbitresComponent implements OnInit {
 
   Data:any
+  arbitres : Arbitre[] = [];
   closeResult: string = '';
-  constructor(private arbitreService: ArbitreService,private modalService: NgbModal,public authService:AuthService) {
+  constructor(private arbitreService: ArbitreService,private modalService: NgbModal,public authService:AuthService
+    ,private router:Router) {
   }
 
   ngOnInit(): void {
-    this.getArbitres()
+    if(!this.authService.loggedIn()){
+      this.router.navigate(['/login']);
+    }
+    this.getArbitres();
+    console.log(this.arbitres);
   }
 
   open(content:any,Data:any) {
@@ -53,8 +60,8 @@ export class ArbitresComponent implements OnInit {
   public getArbitres(): void {
     this.arbitreService.getArbitres().subscribe(
       (response : Arbitre[]) => {
-        this.Data = response;
-        console.log(response);
+        this.arbitres = response;
+        console.log(this.arbitres)
       },
       (error : HttpErrorResponse) => {
         alert(error.message)

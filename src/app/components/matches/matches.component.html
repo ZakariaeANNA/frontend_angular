@@ -18,12 +18,14 @@
                         <td>{{matche.dateMatch}}</td>
                         <td>{{matche.heureMatch}}</td>
                         <td><button type="button" class="btn btn-primary" (click)="open(equipemodal,matche)">equipes</button></td>
-                        <td><button type="button" class="btn btn-danger" (click)="open(deletemodal,matche)">delete</button></td>
-                        <td><button type="button" class="btn btn-warning" (click)="open(modifiermodal,matche)">modifier</button></td>
+                        <td *ngIf="authService.isAdmin()"><button type="button" class="btn btn-danger" (click)="open(deletemodal,matche)">delete</button></td>
+                        <td *ngIf="authService.isAdmin() || authService.isEmployee()"><button type="button" class="btn btn-warning" (click)="open(modifiermodal,matche)">modifier</button></td>
                     </tr>
                 </tbody>
             </table>
-            <button type="button" class="btn btn-success" (click)="openModal(ajoutermodal)">Ajouter Matche</button>
+            <div *ngIf="authService.isAdmin() || authService.isEmployee()">
+              <button type="button" class="btn btn-success" (click)="openModal(ajoutermodal)">Ajouter Matche</button>
+            </div>
         </div>
     </div>
 </div>
@@ -64,12 +66,12 @@
         <div class="mt-2">
             <label >Heure Matche</label>
             <input type="time" id="input" ngModel="{{Data?.heureMatch}}" formControlName="heureMatch" name="heureMatch" class="form-control" value="{{Data?.heureMatch}}" mdbInput/>
-        </div>
+        </div> 
         <div formArrayName="equipes" *ngFor="let equipe of Data.equipes; let i = index" >
           <div formGroupName="{{i}}">
               <div class="mt-2" >
                    <label >ID Equipe {{i + 1}} </label>
-                   <input type="text" ngModel="{{equipe?.idEquipe}}" formControlName="idEquipe" name="idEquipe" class="form-control">
+                   <input readonly type="text" ngModel="{{equipe?.idEquipe}}" formControlName="idEquipe" name="idEquipe" class="form-control">
               </div>
           </div>
         </div>
@@ -104,23 +106,12 @@
       <div class="modal-body">
           <div class="mt-2" >
               <label >Date Matche</label>
-<<<<<<< HEAD
               <input type="date" id="birthday" placeholder="dd/mm/yyyy" formControlName="dateMatch" name="dateMatch" class="form-control" value="">
-=======
-              <div class="input-group">
-                  <input class="form-control" placeholder="dd/mm/yyyy" formControlName="dateMatch"
-                        name="dateMatch" ngbDatepicker #d2="ngbDatepicker">
-                  <div class="input-group-append">
-                    <button class="btn btn-outline-secondary calendar" (click)="d2.toggle()" type="button"></button>
-                  </div>
-              </div>
->>>>>>> a9f2b1cede8370c38878dccfb49f403e2775d866
           </div>  
           <div class="mt-2">
               <label >Heure Matche</label>
               <input type="time" id="input" formControlName="heureMatch" name="heureMatch" class="form-control" value="" mdbInput/>
           </div>
-<<<<<<< HEAD
           <div formArrayName="equipes" *ngFor="let emp of getequipes.controls; let i = index">
             <div formGroupName="{{i}}">
                 <div class="mt-2">
@@ -128,18 +119,6 @@
                      <input type="text" formControlName="idEquipe" name="idEquipe" class="form-control">
                 </div>
             </div>
-          </div>
-          <div class="mt-2">
-            <button type="submit" (click)="addEquipeInput()" class="btn btn-success">Ajouter Equipe</button>
-=======
-          <div formArrayName="equipes">
-            <div >
-                <div class="mt-2">
-                    <label >Nom Equipe</label>
-                    <input type="text" formControlName="nomEquipe" name="nomEquipe" class="form-control">
-                </div>
-            </div>
->>>>>>> a9f2b1cede8370c38878dccfb49f403e2775d866
           </div>
           <div formGroupName="arbitre">
           <div class="mt-2" >
